@@ -17,17 +17,115 @@ const directionOffsets = {
 };
 
 const languageCopy = {
-  en: "Search vaquita, rhino, penguin, forest, bycatch...",
-  es: "Busca vaquita, rinoceronte, pinguino, bosque...",
-  fr: "Cherche vaquita, rhinoceros, pingouin, foret...",
-  hi: "Vaquita, rhino, penguin, forest khojein...",
-  ar: "Search vaquita, rhino, penguin, forest...",
-  zh: "Search vaquita, rhino, penguin, forest...",
-  ja: "Search vaquita, rhino, penguin, forest...",
-  pt: "Busca vaquita, rinoceronte, pinguim, floresta...",
-  sw: "Tafuta vaquita, faru, penguin, msitu...",
-  id: "Cari vaquita, badak, penguin, hutan..."
+  en: {
+    navGlobe: "Globe",
+    navArchive: "Archive",
+    navSources: "Sources",
+    language: "Language",
+    heroKicker: "Rotatable extinction atlas",
+    heroTitle: "Choose a part of Earth. Hear what is almost gone.",
+    heroBody: "Every continent is split into north, south, east, and west. Select a glowing region to open five threatened animals from that area.",
+    searchLabel: "Search 140 animal records",
+    searchButton: "Search",
+    searchPlaceholder: "Search vaquita, rhino, penguin, forest, bycatch...",
+    zonesKicker: "28 living zones",
+    zonesTitle: "Continents divided by direction",
+    panelTitle: "Endangered animals in this region",
+    animalsLoaded: "animals loaded",
+    openVideo: "Open video",
+    animateImages: "Animate images",
+    sourceSuffix: "source",
+    population: "Population left",
+    where: "Where",
+    body: "Body",
+    habitat: "Habitat",
+    imageTitle: "Species image",
+    videoTitle: "Species video",
+    sourcesBody: "This globe build uses concise educational summaries with population values shown as estimates when exact counts are uncertain. Image panels load animal photographs from public media sources where available and filter out maps, charts, diagrams, and range graphics."
+  },
+  es: {
+    navGlobe: "Globo",
+    navArchive: "Archivo",
+    navSources: "Fuentes",
+    language: "Idioma",
+    heroKicker: "Atlas giratorio de extincion",
+    heroTitle: "Elige una parte de la Tierra. Escucha lo que casi desaparece.",
+    heroBody: "Cada continente se divide en norte, sur, este y oeste. Selecciona una region brillante para abrir cinco animales amenazados.",
+    searchLabel: "Buscar 140 animales",
+    searchButton: "Buscar",
+    searchPlaceholder: "Busca vaquita, rinoceronte, pinguino, bosque...",
+    zonesKicker: "28 zonas vivas",
+    zonesTitle: "Continentes divididos por direccion",
+    panelTitle: "Animales en peligro en esta region",
+    animalsLoaded: "animales cargados",
+    openVideo: "Abrir video",
+    animateImages: "Animar imagenes",
+    sourceSuffix: "fuente",
+    population: "Poblacion restante",
+    where: "Donde",
+    body: "Cuerpo",
+    habitat: "Habitat",
+    imageTitle: "Imagen de la especie",
+    videoTitle: "Video de la especie",
+    sourcesBody: "Este globo usa resumenes educativos y estimaciones de poblacion cuando los conteos exactos son inciertos. Las imagenes cargan fotos de animales y filtran mapas, graficas y diagramas."
+  },
+  fr: {
+    navGlobe: "Globe",
+    navArchive: "Archive",
+    navSources: "Sources",
+    language: "Langue",
+    heroKicker: "Atlas rotatif d'extinction",
+    heroTitle: "Choisis une partie de la Terre. Ecoute ce qui disparait presque.",
+    heroBody: "Chaque continent est divise en nord, sud, est et ouest. Choisis une region lumineuse pour ouvrir cinq animaux menaces.",
+    searchLabel: "Chercher 140 animaux",
+    searchButton: "Chercher",
+    searchPlaceholder: "Cherche vaquita, rhinoceros, pingouin, foret...",
+    zonesKicker: "28 zones vivantes",
+    zonesTitle: "Continents divises par direction",
+    panelTitle: "Animaux menaces dans cette region",
+    animalsLoaded: "animaux charges",
+    openVideo: "Ouvrir video",
+    animateImages: "Animer images",
+    sourceSuffix: "source",
+    population: "Population restante",
+    where: "Ou",
+    body: "Corps",
+    habitat: "Habitat",
+    imageTitle: "Image de l'espece",
+    videoTitle: "Video de l'espece",
+    sourcesBody: "Ce globe utilise des resumes educatifs et des estimations quand les comptes exacts sont incertains. Les images chargent des photos d'animaux et filtrent cartes, graphiques et diagrammes."
+  },
+  hi: {
+    navGlobe: "Globe",
+    navArchive: "Archive",
+    navSources: "Sources",
+    language: "Language",
+    heroKicker: "Rotatable extinction atlas",
+    heroTitle: "Earth ka area choose karo. Jo almost gone hai uski story dekho.",
+    heroBody: "Har continent north, south, east, west me divided hai. Glowing region select karke wahan ke five threatened animals kholo.",
+    searchLabel: "140 animal records search karo",
+    searchButton: "Search",
+    searchPlaceholder: "Vaquita, rhino, penguin, forest search karo...",
+    zonesKicker: "28 living zones",
+    zonesTitle: "Continents direction ke hisaab se divided",
+    panelTitle: "Is region ke endangered animals",
+    animalsLoaded: "animals loaded",
+    openVideo: "Video kholo",
+    animateImages: "Images animate karo",
+    sourceSuffix: "source",
+    population: "Population left",
+    where: "Where",
+    body: "Body",
+    habitat: "Habitat",
+    imageTitle: "Species image",
+    videoTitle: "Species video",
+    sourcesBody: "Ye globe educational summaries aur population estimates use karta hai. Images animal photos load karti hain aur maps, charts, diagrams filter karti hain."
+  }
 };
+
+["ar", "zh", "ja", "pt", "sw", "id"].forEach((language) => {
+  languageCopy[language] = { ...languageCopy.en };
+});
 
 const animalTemplates = {
   mammal: {
@@ -69,6 +167,36 @@ const sourceLinks = {
   "BirdLife": "https://datazone.birdlife.org/",
   "Rhino Foundation": "https://rhinos.org/",
   "Whale & Dolphin Conservation": "https://us.whales.org/"
+};
+
+const knownVideoIds = {
+  "vaquita-phocoena-sinus": "Y5nyrFvDumE",
+  "javan-rhinoceros-rhinoceros-sondaicus": "Y5nyrFvDumE"
+};
+
+const fallbackConservationVideoId = "Y5nyrFvDumE";
+
+const earthTextureUrls = {
+  map: "https://cdn.jsdelivr.net/gh/mrdoob/three.js@r128/examples/textures/planets/earth_atmos_2048.jpg",
+  specular: "https://cdn.jsdelivr.net/gh/mrdoob/three.js@r128/examples/textures/planets/earth_specular_2048.jpg",
+  clouds: "https://cdn.jsdelivr.net/gh/mrdoob/three.js@r128/examples/textures/planets/earth_clouds_1024.png"
+};
+
+const curatedImages = {
+  "vaquita-phocoena-sinus": [
+    "https://assets.worldwildlife.org/www-prd/images/wwfcmsprodimagesVaqui.2e16d0ba.fill-375x500.format-webp.webp",
+    "https://upload.wikimedia.org/wikipedia/commons/7/77/Vaquita1_Olson_NOAA.jpg",
+    "https://upload.wikimedia.org/wikipedia/commons/5/5e/Vaquita2_Olson_NOAA.jpg",
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/Vaquita4_Olson_NOAA.jpg/960px-Vaquita4_Olson_NOAA.jpg",
+    "https://upload.wikimedia.org/wikipedia/commons/7/77/Vaquita1_Olson_NOAA.jpg"
+  ],
+  "javan-rhinoceros-rhinoceros-sondaicus": [
+    "https://assets.worldwildlife.org/www-prd/images/wwfcmsprodimagesJavan_nAP0hSU.2e16d0ba.fill-375x500.format-webp.webp",
+    "https://assets.worldwildlife.org/www-prd/images/wwfcmsprodimagesJavan_rhino_07151.width-800.format-webp.webp",
+    "https://gcp-na-images.contentstack.com/v3/assets/bltea6093859af6183b/blte0908699b89011ed/69893f737cdbac8d49d5e76c/2-javan-rhino_photo-by-robin-moore-global-wildlife-conservation.jpg?branch=production&width=1600&quality=75&auto=webp&crop=3:2",
+    "https://upload.wikimedia.org/wikipedia/commons/c/ce/Rhinoceros_sondaicus_in_London_Zoo.jpg",
+    "https://assets.worldwildlife.org/www-prd/images/wwfcmsprodimagesJavan_nAP0hSU.2e16d0ba.fill-375x500.format-webp.webp"
+  ]
 };
 
 const speciesByRegion = {
@@ -285,7 +413,8 @@ function a(name, scientific, status, population, type, range, threat, source) {
     threat,
     source,
     sourceUrl: sourceLinks[source] || sourceLinks.IUCN,
-    videoQuery: `${name} endangered species documentary conservation`
+    videoQuery: `${name} endangered species documentary conservation`,
+    videoId: knownVideoIds[slug(`${name}-${scientific}`)] || fallbackConservationVideoId
   };
 }
 
@@ -324,8 +453,14 @@ const state = {
   activeRegionId: "Africa-North",
   activeAnimalId: speciesByRegion["Africa-North"][0].id,
   imageCache: new Map(),
+  videoCache: new Map(),
+  language: "en",
   markers: []
 };
+
+function t(key) {
+  return languageCopy[state.language]?.[key] || languageCopy.en[key] || key;
+}
 
 const fallbackSvg = (name) =>
   `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(`
@@ -349,14 +484,14 @@ function createEarthTexture() {
   canvas.width = 2048;
   canvas.height = 1024;
   const ctx = canvas.getContext("2d");
-  const ocean = ctx.createLinearGradient(0, 0, 0, canvas.height);
-  ocean.addColorStop(0, "#4dd3ec");
-  ocean.addColorStop(0.48, "#078ec1");
-  ocean.addColorStop(1, "#044d76");
+  const ocean = ctx.createRadialGradient(1160, 300, 80, 1024, 520, 900);
+  ocean.addColorStop(0, "#6ee7f2");
+  ocean.addColorStop(0.45, "#13abc8");
+  ocean.addColorStop(1, "#015f78");
   ctx.fillStyle = ocean;
   ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-  ctx.globalAlpha = 0.9;
+  ctx.globalAlpha = 1;
   drawLand(ctx, -100, 48, 270, 170, -0.12);
   drawLand(ctx, -60, -18, 150, 250, 0.16);
   drawLand(ctx, 20, 4, 190, 260, -0.08);
@@ -365,18 +500,6 @@ function createEarthTexture() {
   drawLand(ctx, 138, -25, 190, 130, -0.18);
   drawLand(ctx, 20, -74, 520, 88, 0);
   drawLand(ctx, -42, 72, 120, 72, 0.08);
-
-  ctx.globalAlpha = 0.24;
-  ctx.strokeStyle = "#f7f1e6";
-  ctx.lineWidth = 4;
-  for (let y = 80; y < canvas.height; y += 120) {
-    ctx.beginPath();
-    ctx.moveTo(0, y);
-    for (let x = 0; x <= canvas.width; x += 80) {
-      ctx.lineTo(x, y + Math.sin(x / 90 + y / 120) * 10);
-    }
-    ctx.stroke();
-  }
 
   const texture = new THREE.CanvasTexture(canvas);
   if ("colorSpace" in texture && THREE.SRGBColorSpace) {
@@ -387,23 +510,55 @@ function createEarthTexture() {
   return texture;
 }
 
-function drawLand(ctx, lon, lat, width, height, rotation) {
+function createEarthBumpTexture() {
+  const canvas = document.createElement("canvas");
+  canvas.width = 2048;
+  canvas.height = 1024;
+  const ctx = canvas.getContext("2d");
+  ctx.fillStyle = "#222";
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  ctx.globalAlpha = 1;
+  ctx.fillStyle = "#fff";
+  drawLand(ctx, -100, 48, 270, 170, -0.12, true);
+  drawLand(ctx, -60, -18, 150, 250, 0.16, true);
+  drawLand(ctx, 20, 4, 190, 260, -0.08, true);
+  drawLand(ctx, 18, 51, 185, 95, 0.05, true);
+  drawLand(ctx, 85, 36, 360, 220, 0.08, true);
+  drawLand(ctx, 138, -25, 190, 130, -0.18, true);
+  drawLand(ctx, 20, -74, 520, 88, 0, true);
+  drawLand(ctx, -42, 72, 120, 72, 0.08, true);
+  return new THREE.CanvasTexture(canvas);
+}
+
+function drawLand(ctx, lon, lat, width, height, rotation, bumpOnly = false) {
   const x = ((lon + 180) / 360) * 2048;
   const y = ((90 - lat) / 180) * 1024;
   const gradient = ctx.createLinearGradient(x - width, y - height, x + width, y + height);
-  gradient.addColorStop(0, "#c5d964");
-  gradient.addColorStop(0.42, "#6cb94e");
-  gradient.addColorStop(1, "#1f7b44");
+  gradient.addColorStop(0, "#d7e777");
+  gradient.addColorStop(0.42, "#9fca63");
+  gradient.addColorStop(1, "#4f8f45");
 
   ctx.save();
   ctx.translate(x, y);
   ctx.rotate(rotation);
-  ctx.fillStyle = gradient;
+  ctx.shadowColor = bumpOnly ? "transparent" : "rgba(4, 25, 18, 0.45)";
+  ctx.shadowBlur = bumpOnly ? 0 : 16;
+  ctx.shadowOffsetX = bumpOnly ? 0 : 10;
+  ctx.shadowOffsetY = bumpOnly ? 0 : 14;
+  ctx.fillStyle = bumpOnly ? "#fff" : gradient;
   for (let i = 0; i < 5; i += 1) {
     const scale = 1 - i * 0.1;
     ctx.beginPath();
-    ctx.ellipse((i - 2) * width * 0.08, Math.sin(i) * height * 0.08, width * scale, height * (0.66 + i * 0.04), 0, 0, Math.PI * 2);
+    ctx.ellipse((i - 2) * width * 0.08, Math.sin(i) * height * 0.08, width * scale, height * (0.58 + i * 0.04), 0, 0, Math.PI * 2);
     ctx.fill();
+  }
+  if (!bumpOnly) {
+    ctx.shadowColor = "transparent";
+    ctx.strokeStyle = "rgba(244, 255, 202, 0.28)";
+    ctx.lineWidth = 8;
+    ctx.beginPath();
+    ctx.ellipse(0, 0, width * 0.92, height * 0.6, 0, 0, Math.PI * 2);
+    ctx.stroke();
   }
   ctx.restore();
 }
@@ -431,18 +586,50 @@ function initGlobe() {
   renderer.setSize(container.clientWidth, container.clientHeight);
   container.appendChild(renderer.domElement);
 
+  const loader = new THREE.TextureLoader();
+  loader.setCrossOrigin("anonymous");
+  const earthMap = loader.load(earthTextureUrls.map);
+  const earthSpecular = loader.load(earthTextureUrls.specular);
+  const cloudMap = loader.load(earthTextureUrls.clouds);
+
   const globe = new THREE.Mesh(
-    new THREE.SphereGeometry(2, 96, 96),
+    new THREE.SphereGeometry(2, 128, 128),
     new THREE.MeshStandardMaterial({
-      map: createEarthTexture(),
-      roughness: 0.72,
+      map: earthMap,
+      roughness: 0.64,
       metalness: 0.02
     })
   );
+  globe.rotation.y = -0.62;
   scene.add(globe);
 
+  const oceanSheen = new THREE.Mesh(
+    new THREE.SphereGeometry(2.006, 128, 128),
+    new THREE.MeshPhongMaterial({
+      specularMap: earthSpecular,
+      specular: new THREE.Color(0x4fd7e9),
+      shininess: 18,
+      transparent: true,
+      opacity: 0.22
+    })
+  );
+  oceanSheen.rotation.y = globe.rotation.y;
+  scene.add(oceanSheen);
+
+  const clouds = new THREE.Mesh(
+    new THREE.SphereGeometry(2.035, 128, 128),
+    new THREE.MeshLambertMaterial({
+      map: cloudMap,
+      transparent: true,
+      opacity: 0.22,
+      depthWrite: false
+    })
+  );
+  clouds.rotation.y = globe.rotation.y;
+  scene.add(clouds);
+
   const atmosphere = new THREE.Mesh(
-    new THREE.SphereGeometry(2.08, 96, 96),
+    new THREE.SphereGeometry(2.12, 128, 128),
     new THREE.MeshBasicMaterial({
       color: 0x75d8ea,
       transparent: true,
@@ -477,10 +664,13 @@ function initGlobe() {
   });
   scene.add(markerGroup);
 
-  scene.add(new THREE.AmbientLight(0xffffff, 0.82));
-  const sun = new THREE.DirectionalLight(0xffffff, 1.65);
-  sun.position.set(5, 4, 4);
+  scene.add(new THREE.AmbientLight(0xffffff, 0.68));
+  const sun = new THREE.DirectionalLight(0xffffff, 1.85);
+  sun.position.set(4.5, 4.8, 5);
   scene.add(sun);
+  const rim = new THREE.DirectionalLight(0x62c9d8, 0.72);
+  rim.position.set(-4, 1.5, -3);
+  scene.add(rim);
 
   const controls = new THREE.OrbitControls(camera, renderer.domElement);
   controls.enableDamping = true;
@@ -518,6 +708,8 @@ function initGlobe() {
   function animate() {
     requestAnimationFrame(animate);
     globe.rotation.y += 0.0018;
+    oceanSheen.rotation.y = globe.rotation.y;
+    clouds.rotation.y += 0.0024;
     atmosphere.rotation.y += 0.0018;
     markerGroup.rotation.y = globe.rotation.y;
     controls.update();
@@ -556,9 +748,9 @@ function setActiveRegion(regionId) {
   state.activeAnimalId = region.animals[0]?.id || state.activeAnimalId;
 
   document.querySelector("#activeRegionLabel").textContent = region.label;
-  document.querySelector("#activeRegionCount").textContent = `${region.animals.length} animals loaded`;
+  document.querySelector("#activeRegionCount").textContent = `${region.animals.length} ${t("animalsLoaded")}`;
   document.querySelector("#panelKicker").textContent = region.label;
-  document.querySelector("#panelTitle").textContent = "Endangered animals in this region";
+  document.querySelector("#panelTitle").textContent = t("panelTitle");
 
   state.markers.forEach((marker) => {
     marker.material.color.set(marker.userData.regionId === region.id ? 0xffbd68 : 0xf7f1e6);
@@ -648,21 +840,21 @@ async function renderDetail(animal) {
       <h2>${animal.name}</h2>
       <p>${animal.threat}</p>
       <div class="detail-facts">
-        <div class="fact"><span>Population left</span><strong>${animal.population}</strong></div>
-        <div class="fact"><span>Where</span><strong>${animal.range}</strong></div>
-        <div class="fact"><span>Body</span><strong>${animal.body}</strong></div>
-        <div class="fact"><span>Habitat</span><strong>${animal.habitat}</strong></div>
+        <div class="fact"><span>${t("population")}</span><strong>${animal.population}</strong></div>
+        <div class="fact"><span>${t("where")}</span><strong>${animal.range}</strong></div>
+        <div class="fact"><span>${t("body")}</span><strong>${animal.body}</strong></div>
+        <div class="fact"><span>${t("habitat")}</span><strong>${animal.habitat}</strong></div>
       </div>
       <div class="detail-actions">
-        <button type="button" data-open-video="${animal.id}">Open video</button>
-        <button type="button" data-animate-images>Animate images</button>
-        <a class="source-links-inline" href="${animal.sourceUrl}" target="_blank" rel="noreferrer">${animal.source} source</a>
+        <button type="button" data-open-video="${animal.id}">${t("openVideo")}</button>
+        <button type="button" data-animate-images>${t("animateImages")}</button>
+        <a class="source-links-inline" href="${animal.sourceUrl}" target="_blank" rel="noreferrer">${animal.source} ${t("sourceSuffix")}</a>
       </div>
       <div class="detail-gallery" aria-label="Five image panel">
         ${[0, 1, 2, 3, 4]
           .map(
             (index) => `
-              <button type="button" aria-label="Animate ${animal.name} image ${index + 1}">
+              <button type="button" aria-label="Open ${animal.name} image ${index + 1}" data-large-image="${images[index] || fallbackSvg(animal.name)}">
                 <img src="${images[index] || fallbackSvg(animal.name)}" alt="${animal.name} image ${index + 1}">
               </button>
             `
@@ -676,7 +868,7 @@ async function renderDetail(animal) {
   panel.querySelector("[data-animate-images]")?.addEventListener("click", () => animateGallery(panel));
   panel.querySelectorAll(".detail-gallery button").forEach((button) => {
     button.addEventListener("click", () => {
-      button.classList.toggle("is-moving");
+      openImage(button.dataset.largeImage, `${animal.name} image`);
     });
   });
 }
@@ -691,54 +883,177 @@ function animateGallery(panel) {
 async function loadAnimalImages(animal) {
   if (state.imageCache.has(animal.id)) return state.imageCache.get(animal.id);
 
-  const query = `${animal.name} ${animal.scientific}`;
-  const url = `https://commons.wikimedia.org/w/api.php?action=query&generator=search&gsrsearch=${encodeURIComponent(query)}&gsrnamespace=6&gsrlimit=8&prop=imageinfo&iiprop=url&iiurlwidth=900&format=json&origin=*`;
-
-  try {
-    const response = await fetch(url);
-    const data = await response.json();
-    const pages = Object.values(data.query?.pages || {});
-    const images = pages
-      .map((page) => page.imageinfo?.[0]?.thumburl || page.imageinfo?.[0]?.url)
-      .filter(Boolean)
-      .filter((imageUrl) => !/\.svg($|\?)/i.test(imageUrl))
-      .slice(0, 5);
-    const completed = images.length ? images : [fallbackSvg(animal.name)];
-    state.imageCache.set(animal.id, completed);
-    return completed;
-  } catch {
-    const completed = [fallbackSvg(animal.name)];
-    state.imageCache.set(animal.id, completed);
-    return completed;
+  if (curatedImages[animal.id]) {
+    state.imageCache.set(animal.id, curatedImages[animal.id]);
+    return curatedImages[animal.id];
   }
+
+  const queries = [animal.scientific, animal.name, `${animal.name} wildlife`];
+  const images = [];
+
+  for (const query of queries) {
+    if (images.length >= 5) break;
+    const url = `https://commons.wikimedia.org/w/api.php?action=query&generator=search&gsrsearch=${encodeURIComponent(query)}&gsrnamespace=6&gsrlimit=30&prop=imageinfo&iiprop=url|mime&iiurlwidth=1100&format=json&origin=*`;
+    try {
+      const response = await fetch(url);
+      const data = await response.json();
+      const pages = Object.values(data.query?.pages || {});
+      pages
+        .filter((page) => isAnimalPhotoPage(page, animal))
+        .map((page) => page.imageinfo?.[0]?.thumburl || page.imageinfo?.[0]?.url)
+        .filter(Boolean)
+        .forEach((imageUrl) => {
+          if (images.length < 5 && !images.includes(imageUrl) && isAnimalPhotoUrl(imageUrl)) {
+            images.push(imageUrl);
+          }
+        });
+    } catch {
+      break;
+    }
+  }
+
+  const foundPhotos = [...images];
+  while (images.length < 5) {
+    images.push(foundPhotos.length ? foundPhotos[images.length % foundPhotos.length] : fallbackSvg(animal.name));
+  }
+
+  state.imageCache.set(animal.id, images);
+  return images;
 }
 
-function openVideo(animal) {
+function isAnimalPhotoPage(page, animal) {
+  const title = `${page.title || ""} ${page.imageinfo?.[0]?.url || ""}`.toLowerCase();
+  const mime = page.imageinfo?.[0]?.mime || "";
+  return mime.startsWith("image/") && hasAnimalNameMatch(title, animal) && isAnimalPhotoUrl(title);
+}
+
+function hasAnimalNameMatch(value, animal) {
+  const text = String(value).toLowerCase();
+  const nameTokens = [
+    ...animal.name.toLowerCase().split(/\s+/),
+    ...animal.scientific.toLowerCase().split(/\s+/)
+  ].filter((token) => token.length > 3);
+  return nameTokens.some((token) => text.includes(token));
+}
+
+function isAnimalPhotoUrl(value) {
+  const text = decodeURIComponent(String(value)).toLowerCase();
+  const blocked = [
+    "map",
+    "range",
+    "distribution",
+    "locator",
+    "satellite",
+    "landsat",
+    "airmountains",
+    "aerial",
+    "diagram",
+    "chart",
+    "graph",
+    "plate",
+    "book",
+    "animal_kingdom",
+    "size",
+    "silhouette",
+    "skull",
+    "skeleton",
+    "museum",
+    "specimen",
+    "statue",
+    "ship",
+    "boat",
+    "warnow",
+    "illustration",
+    "drawing",
+    "painting",
+    "stamp",
+    "coin",
+    "logo",
+    "icon",
+    ".svg"
+  ];
+  return !blocked.some((word) => text.includes(word));
+}
+
+async function loadAnimalVideo(animal) {
+  if (state.videoCache.has(animal.id)) return state.videoCache.get(animal.id);
+
+  const fallback = { type: "motion" };
+  state.videoCache.set(animal.id, fallback);
+  return fallback;
+}
+
+async function openVideo(animal) {
   const modal = document.querySelector("#videoModal");
   const title = document.querySelector("#videoTitle");
-  const frame = document.querySelector("#videoFrame");
-  if (!modal || !title || !frame) return;
+  const wrap = document.querySelector("#videoFrameWrap");
+  if (!modal || !title || !wrap) return;
 
-  title.textContent = `${animal.name} video`;
-  frame.src = `https://www.youtube-nocookie.com/embed?listType=search&list=${encodeURIComponent(animal.videoQuery)}`;
+  title.textContent = `${animal.name} ${t("videoTitle")}`;
+  wrap.innerHTML = '<div class="empty-state">Loading video...</div>';
   modal.hidden = false;
+
+  const video = await loadAnimalVideo(animal);
+  if (video.type === "file") {
+    wrap.innerHTML = `<video controls autoplay playsinline src="${video.url}"></video>`;
+  } else {
+    const images = await loadAnimalImages(animal);
+    wrap.innerHTML = `
+      <div class="motion-video" aria-label="${animal.name} moving image preview">
+        ${images
+          .map((image, index) => `<img src="${image}" alt="${animal.name} motion frame ${index + 1}" style="--frame-index:${index}">`)
+          .join("")}
+        <div class="motion-caption">
+          <span>${animal.name}</span>
+          <strong>${animal.threat}</strong>
+        </div>
+      </div>
+    `;
+  }
 }
 
 function closeVideo() {
   const modal = document.querySelector("#videoModal");
-  const frame = document.querySelector("#videoFrame");
-  if (!modal || !frame) return;
-  frame.src = "";
+  const wrap = document.querySelector("#videoFrameWrap");
+  if (!modal || !wrap) return;
+  wrap.innerHTML = "";
+  modal.hidden = true;
+}
+
+function openImage(src, titleText) {
+  const modal = document.querySelector("#imageModal");
+  const title = document.querySelector("#imageTitle");
+  const image = document.querySelector("#largeImage");
+  if (!modal || !title || !image || !src) return;
+
+  title.textContent = titleText || t("imageTitle");
+  image.src = src;
+  image.alt = titleText || t("imageTitle");
+  modal.hidden = false;
+}
+
+function closeImage() {
+  const modal = document.querySelector("#imageModal");
+  const image = document.querySelector("#largeImage");
+  if (!modal || !image) return;
+  image.src = "";
   modal.hidden = true;
 }
 
 function setupModal() {
   document.querySelector("#closeVideo")?.addEventListener("click", closeVideo);
+  document.querySelector("#closeImage")?.addEventListener("click", closeImage);
   document.querySelector("#videoModal")?.addEventListener("click", (event) => {
     if (event.target.id === "videoModal") closeVideo();
   });
+  document.querySelector("#imageModal")?.addEventListener("click", (event) => {
+    if (event.target.id === "imageModal") closeImage();
+  });
   window.addEventListener("keydown", (event) => {
-    if (event.key === "Escape") closeVideo();
+    if (event.key === "Escape") {
+      closeVideo();
+      closeImage();
+    }
   });
 }
 
@@ -774,7 +1089,7 @@ function setupSearch() {
         .includes(query)
     );
 
-    document.querySelector("#panelKicker").textContent = "Search results";
+    document.querySelector("#panelKicker").textContent = t("searchButton");
     document.querySelector("#panelTitle").textContent = results.length === 1 ? "1 animal found" : `${results.length} animals found`;
     if (results[0]) state.activeAnimalId = results[0].id;
     renderAnimalCards(results);
@@ -795,16 +1110,45 @@ function setupLanguagePreference() {
 
   const saved = localStorage.getItem("echoes-language") || "en";
   select.value = languageCopy[saved] ? saved : "en";
-  input.placeholder = languageCopy[select.value];
+  state.language = select.value;
+  applyLanguage();
   document.documentElement.lang = select.value;
   document.documentElement.dir = select.value === "ar" ? "rtl" : "ltr";
 
   select.addEventListener("change", () => {
     const language = languageCopy[select.value] ? select.value : "en";
     localStorage.setItem("echoes-language", language);
-    input.placeholder = languageCopy[language];
+    state.language = language;
+    applyLanguage();
     document.documentElement.lang = language;
     document.documentElement.dir = language === "ar" ? "rtl" : "ltr";
+  });
+}
+
+function applyLanguage() {
+  document.querySelectorAll("[data-i18n]").forEach((node) => {
+    node.textContent = t(node.dataset.i18n);
+  });
+
+  const input = document.querySelector("#speciesSearch");
+  if (input) input.placeholder = t("searchPlaceholder");
+
+  const activeRegion = regions.find((region) => region.id === state.activeRegionId);
+  if (activeRegion) {
+    document.querySelector("#activeRegionCount").textContent = `${activeRegion.animals.length} ${t("animalsLoaded")}`;
+    document.querySelector("#panelTitle").textContent = t("panelTitle");
+  }
+
+  const activeAnimal = findAnimal(state.activeAnimalId);
+  if (activeAnimal) renderDetail(activeAnimal);
+}
+
+function setupLogoFallback() {
+  const logo = document.querySelector(".brand-mark img");
+  if (!logo) return;
+  logo.addEventListener("error", () => {
+    logo.removeAttribute("src");
+    logo.style.display = "none";
   });
 }
 
@@ -813,4 +1157,5 @@ setActiveRegion(state.activeRegionId);
 setupSearch();
 setupModal();
 setupLanguagePreference();
+setupLogoFallback();
 initGlobe();

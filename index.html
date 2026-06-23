@@ -13,18 +13,21 @@
     <div class="site-shell">
       <header class="topbar">
         <a class="brand" href="#home" aria-label="Echoes home">
-          <span class="brand-mark" aria-hidden="true">E</span>
+          <span class="brand-mark" aria-hidden="true">
+            <img src="https://pin.it/6YipkSXxQ" alt="" onerror="this.removeAttribute('src');this.style.display='none';">
+            <span>E</span>
+          </span>
           <span class="brand-name">Echoes</span>
         </a>
 
         <nav class="nav-links" aria-label="Main sections">
-          <a href="#globe">Globe</a>
-          <a href="#archive">Archive</a>
-          <a href="#sources">Sources</a>
+          <a href="#globe" data-i18n="navGlobe">Globe</a>
+          <a href="#archive" data-i18n="navArchive">Archive</a>
+          <a href="#sources" data-i18n="navSources">Sources</a>
         </nav>
 
         <label class="language-control" for="languagePreference">
-          <span>Language</span>
+          <span data-i18n="language">Language</span>
           <select id="languagePreference" aria-label="Language preference">
             <option value="en">English</option>
             <option value="es">Espanol</option>
@@ -43,16 +46,16 @@
       <main id="home">
         <section id="globe" class="globe-stage" aria-label="Interactive endangered species globe">
           <div class="globe-copy">
-            <p class="kicker">Rotatable extinction atlas</p>
-            <h1>Choose a part of Earth. Hear what is almost gone.</h1>
-            <p>
+            <p class="kicker" data-i18n="heroKicker">Rotatable extinction atlas</p>
+            <h1 data-i18n="heroTitle">Choose a part of Earth. Hear what is almost gone.</h1>
+            <p data-i18n="heroBody">
               Every continent is split into north, south, east, and west. Select a glowing region to open five threatened animals from that area.
             </p>
             <form class="search-panel" role="search" aria-label="Search animals">
-              <label for="speciesSearch">Search 140 animal records</label>
+              <label for="speciesSearch" data-i18n="searchLabel">Search 140 animal records</label>
               <div class="search-row">
                 <input id="speciesSearch" type="search" autocomplete="off" placeholder="Search vaquita, rhino, penguin, forest, bycatch...">
-                <button type="submit">Search</button>
+                <button type="submit" data-i18n="searchButton">Search</button>
               </div>
             </form>
           </div>
@@ -68,8 +71,8 @@
 
         <section class="region-console" aria-label="Region selector">
           <div class="region-heading">
-            <p class="kicker">28 living zones</p>
-            <h2>Continents divided by direction</h2>
+            <p class="kicker" data-i18n="zonesKicker">28 living zones</p>
+            <h2 data-i18n="zonesTitle">Continents divided by direction</h2>
           </div>
           <div id="regionGrid" class="region-grid"></div>
         </section>
@@ -89,7 +92,7 @@
         </section>
 
         <section id="sources" class="source-band">
-          <p>
+          <p data-i18n="sourcesBody">
             This first globe build uses concise educational summaries with population values shown as estimates when exact counts are uncertain. Image panels load public media from Wikimedia Commons where available. Conservation references include WWF, IUCN Red List, NOAA Fisheries, USFWS, EDGE, and regional conservation organizations.
           </p>
           <div class="source-links">
@@ -108,8 +111,18 @@
       <div class="modal-panel">
         <button id="closeVideo" class="modal-close" type="button" aria-label="Close video">x</button>
         <h2 id="videoTitle">Species video</h2>
-        <div class="video-frame">
+        <div id="videoFrameWrap" class="video-frame">
           <iframe id="videoFrame" title="Embedded species video" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+        </div>
+      </div>
+    </div>
+
+    <div id="imageModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="imageTitle" hidden>
+      <div class="modal-panel image-modal-panel">
+        <button id="closeImage" class="modal-close" type="button" aria-label="Close image">x</button>
+        <h2 id="imageTitle">Species image</h2>
+        <div class="image-frame">
+          <img id="largeImage" src="" alt="">
         </div>
       </div>
     </div>
