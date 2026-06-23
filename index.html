@@ -3,153 +3,119 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>echoes</title>
+    <title>Echoes</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Parisienne&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
   </head>
   <body>
-    <div class="background-layer" aria-hidden="true"></div>
-    <div class="page-shell">
+    <div class="site-shell">
       <header class="topbar">
-        <a class="brand" href="#home" aria-label="echoes home">
-          <span class="brand-mark">
-            <img src="https://i.pinimg.com/originals/f1/41/8e/f1418e121a788805abcf7b19f09ac52a.webp" alt="">
-          </span>
-          <span class="brand-name">echoes</span>
+        <a class="brand" href="#home" aria-label="Echoes home">
+          <span class="brand-mark" aria-hidden="true">E</span>
+          <span class="brand-name">Echoes</span>
         </a>
 
         <nav class="nav-links" aria-label="Main sections">
-          <a href="#home" data-i18n="nav.home">Home</a>
-          <a href="#archive" data-i18n="nav.archive">Archive</a>
-          <a href="#why" data-i18n="nav.why">Why it matters</a>
+          <a href="#globe">Globe</a>
+          <a href="#archive">Archive</a>
+          <a href="#sources">Sources</a>
         </nav>
 
         <label class="language-control" for="languagePreference">
-          <span data-i18n="language.label">Language</span>
+          <span>Language</span>
           <select id="languagePreference" aria-label="Language preference">
             <option value="en">English</option>
-            <option value="es">Español</option>
+            <option value="es">Espanol</option>
+            <option value="fr">Francais</option>
             <option value="hi">Hindi</option>
-            <option value="fr">Français</option>
             <option value="ar">Arabic</option>
             <option value="zh">Chinese</option>
             <option value="ja">Japanese</option>
+            <option value="pt">Portuguese</option>
+            <option value="sw">Swahili</option>
+            <option value="id">Indonesian</option>
           </select>
         </label>
       </header>
 
-      <main>
-        <section id="home" class="hero">
-          <div class="hero-copy">
-            <p class="eyebrow" data-i18n="hero.eyebrow">Living memory capsule</p>
-            <h1 data-i18n="hero.title">The sea is almost silent.</h1>
-            <p class="hero-text" data-i18n="hero.text">
-              A focused archive for the vaquita, the rare porpoise surviving only in Mexico's northern Gulf of California.
+      <main id="home">
+        <section id="globe" class="globe-stage" aria-label="Interactive endangered species globe">
+          <div class="globe-copy">
+            <p class="kicker">Rotatable extinction atlas</p>
+            <h1>Choose a part of Earth. Hear what is almost gone.</h1>
+            <p>
+              Every continent is split into north, south, east, and west. Select a glowing region to open five threatened animals from that area.
             </p>
-            <div class="hero-actions">
-              <a class="button primary" href="#archive" data-i18n="hero.primary">Enter the archive</a>
-              <a class="button ghost" href="#timeline" data-i18n="hero.secondary">See the collapse</a>
-            </div>
+            <form class="search-panel" role="search" aria-label="Search animals">
+              <label for="speciesSearch">Search 140 animal records</label>
+              <div class="search-row">
+                <input id="speciesSearch" type="search" autocomplete="off" placeholder="Search vaquita, rhino, penguin, forest, bycatch...">
+                <button type="submit">Search</button>
+              </div>
+            </form>
           </div>
 
-          <aside class="status-panel" aria-label="Vaquita status summary">
-            <p class="panel-label" data-i18n="status.label">Current signal</p>
-            <strong data-i18n="status.count">About 10 remain</strong>
-            <span data-i18n="status.note">Critically endangered marine mammal</span>
+          <div class="globe-wrap">
+            <div id="globeCanvas" class="globe-canvas" aria-label="3D globe"></div>
+            <div class="globe-hud" aria-live="polite">
+              <span id="activeRegionLabel">Africa / North</span>
+              <strong id="activeRegionCount">5 animals loaded</strong>
+            </div>
+          </div>
+        </section>
+
+        <section class="region-console" aria-label="Region selector">
+          <div class="region-heading">
+            <p class="kicker">28 living zones</p>
+            <h2>Continents divided by direction</h2>
+          </div>
+          <div id="regionGrid" class="region-grid"></div>
+        </section>
+
+        <section id="archive" class="animal-console" aria-live="polite">
+          <div class="animal-panel">
+            <div class="panel-heading">
+              <p class="kicker" id="panelKicker">Africa / North</p>
+              <h2 id="panelTitle">Endangered animals in this region</h2>
+            </div>
+            <div id="animalGrid" class="animal-grid"></div>
+          </div>
+
+          <aside class="detail-panel">
+            <div id="animalDetail" class="animal-detail"></div>
           </aside>
         </section>
 
-        <section id="archive" class="section">
-          <div class="section-heading">
-            <p class="eyebrow" data-i18n="archive.eyebrow">Endangered species</p>
-            <h2 data-i18n="archive.title">Vaquita memory record</h2>
-          </div>
-
-          <div class="species-layout">
-            <article class="species-card">
-              <img class="species-image" src="https://assets.worldwildlife.org/www-prd/images/wwfcmsprodimagesVaqui.2e16d0ba.fill-375x500.format-webp.webp" alt="A vaquita swimming near the water surface">
-              <div class="species-copy">
-                <p class="script-label">Phocoena sinus</p>
-                <h3 data-i18n="species.title">The rarest marine mammal on Earth</h3>
-                <p data-i18n="species.body">
-                  The vaquita was first identified in 1958. In a little more than half a century, it has been pushed to the edge of extinction by accidental capture in fishing nets.
-                </p>
-              </div>
-            </article>
-
-            <div class="facts-grid" aria-label="Vaquita facts">
-              <div class="fact">
-                <span data-i18n="facts.status.label">Status</span>
-                <strong data-i18n="facts.status.value">Critically endangered</strong>
-              </div>
-              <div class="fact">
-                <span data-i18n="facts.population.label">Population</span>
-                <strong data-i18n="facts.population.value">About 10 individuals</strong>
-              </div>
-              <div class="fact">
-                <span data-i18n="facts.habitat.label">Habitat</span>
-                <strong data-i18n="facts.habitat.value">Northern Gulf of California</strong>
-              </div>
-              <div class="fact">
-                <span data-i18n="facts.size.label">Size</span>
-                <strong data-i18n="facts.size.value">Up to 5 feet, 120 pounds</strong>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section class="section split-section">
-          <div class="image-strip">
-            <img src="https://assets.worldwildlife.org/www-prd/images/wwfcmsprodimagesFishing_boat_Gulf.width-800.format-webp.webp" alt="Fishing boat in the Gulf of California">
-          </div>
-          <div class="text-block">
-            <p class="eyebrow" data-i18n="threat.eyebrow">Reason for extinction risk</p>
-            <h2 data-i18n="threat.title">The danger is not hunting. It is entanglement.</h2>
-            <p data-i18n="threat.body">
-              Vaquitas drown after becoming trapped in gillnets set for other marine animals, especially totoaba. Illegal totoaba fishing grew because of demand for swim bladders, and that trade now drives the vaquita's collapse.
-            </p>
-          </div>
-        </section>
-
-        <section id="timeline" class="section">
-          <div class="section-heading">
-            <p class="eyebrow" data-i18n="timeline.eyebrow">Extinction pressure</p>
-            <h2 data-i18n="timeline.title">How a species becomes a whisper</h2>
-          </div>
-          <div class="timeline">
-            <div class="timeline-item">
-              <span>1958</span>
-              <p data-i18n="timeline.item1">The vaquita is formally discovered by science.</p>
-            </div>
-            <div class="timeline-item">
-              <span>1970s</span>
-              <p data-i18n="timeline.item2">Gillnet entanglement pushes the species down to dangerously low levels.</p>
-            </div>
-            <div class="timeline-item">
-              <span>2014</span>
-              <p data-i18n="timeline.item3">WWF calls for strong enforcement of a gillnet ban across the full vaquita range.</p>
-            </div>
-            <div class="timeline-item">
-              <span>Now</span>
-              <p data-i18n="timeline.item4">Only around 10 are estimated to remain, so every surviving animal matters.</p>
-            </div>
-          </div>
-        </section>
-
-        <section id="why" class="section closing">
-          <p class="eyebrow" data-i18n="why.eyebrow">Why this archive exists</p>
-          <h2 data-i18n="why.title">Extinction should not happen quietly.</h2>
-          <p data-i18n="why.body">
-            This first version focuses on one animal so the story feels human-sized. Later, the same structure can hold other endangered species, extinct species, lost festivals, vanishing traditions, and the reasons they disappeared.
+        <section id="sources" class="source-band">
+          <p>
+            This first globe build uses concise educational summaries with population values shown as estimates when exact counts are uncertain. Image panels load public media from Wikimedia Commons where available. Conservation references include WWF, IUCN Red List, NOAA Fisheries, USFWS, EDGE, and regional conservation organizations.
           </p>
-          <div class="source-line">
-            <a href="https://www.worldwildlife.org/species/dolphin-and-porpoise/vaquita/" target="_blank" rel="noreferrer" data-i18n="why.source">Source: World Wildlife Fund vaquita profile</a>
+          <div class="source-links">
+            <a href="https://www.worldwildlife.org/species" target="_blank" rel="noreferrer">WWF species profiles</a>
+            <a href="https://www.iucnredlist.org/" target="_blank" rel="noreferrer">IUCN Red List</a>
+            <a href="https://www.fisheries.noaa.gov/species-directory/threatened-endangered" target="_blank" rel="noreferrer">NOAA endangered species</a>
+            <a href="https://www.fws.gov/program/endangered-species" target="_blank" rel="noreferrer">USFWS endangered species</a>
+            <a href="https://commons.wikimedia.org/" target="_blank" rel="noreferrer">Wikimedia Commons media</a>
+            <a href="https://everswap.com/" target="_blank" rel="noreferrer">Design inspiration</a>
           </div>
         </section>
       </main>
     </div>
+
+    <div id="videoModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="videoTitle" hidden>
+      <div class="modal-panel">
+        <button id="closeVideo" class="modal-close" type="button" aria-label="Close video">x</button>
+        <h2 id="videoTitle">Species video</h2>
+        <div class="video-frame">
+          <iframe id="videoFrame" title="Embedded species video" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
     <script src="app.js"></script>
   </body>
 </html>
