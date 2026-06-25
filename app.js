@@ -9,11 +9,52 @@ const continents = [
   { name: "South America", lat: -21, lon: -60 }
 ];
 
+const oceans = [
+  { name: "Pacific Ocean" },
+  { name: "Atlantic Ocean" },
+  { name: "Indian Ocean" },
+  { name: "Southern Ocean" },
+  { name: "Arctic Ocean" }
+];
+
 const directionOffsets = {
   North: { lat: 13, lon: 0 },
   South: { lat: -13, lon: 0 },
   East: { lat: 0, lon: 18 },
   West: { lat: 0, lon: -18 }
+};
+
+const oceanRegionCoordinates = {
+  "Pacific Ocean": {
+    North: { lat: 35, lon: -160 },
+    South: { lat: -35, lon: -140 },
+    East: { lat: 5, lon: -105 },
+    West: { lat: 5, lon: 150 }
+  },
+  "Atlantic Ocean": {
+    North: { lat: 35, lon: -35 },
+    South: { lat: -35, lon: -20 },
+    East: { lat: 5, lon: 5 },
+    West: { lat: 5, lon: -55 }
+  },
+  "Indian Ocean": {
+    North: { lat: 10, lon: 65 },
+    South: { lat: -35, lon: 75 },
+    East: { lat: -10, lon: 105 },
+    West: { lat: -10, lon: 45 }
+  },
+  "Southern Ocean": {
+    North: { lat: -50, lon: 0 },
+    South: { lat: -65, lon: 0 },
+    East: { lat: -58, lon: 90 },
+    West: { lat: -58, lon: -90 }
+  },
+  "Arctic Ocean": {
+    North: { lat: 82, lon: 0 },
+    South: { lat: 68, lon: 0 },
+    East: { lat: 74, lon: 90 },
+    West: { lat: 74, lon: -90 }
+  }
 };
 
 const languageCopy = {
@@ -24,12 +65,12 @@ const languageCopy = {
     language: "Language",
     heroKicker: "Rotatable extinction atlas",
     heroTitle: "Choose a part of Earth. Hear what is almost gone.",
-    heroBody: "Every continent is split into north, south, east, and west. Select a glowing region to open five threatened animals from that area.",
-    searchLabel: "Search 140 animal records",
+    heroBody: "Every continent and ocean is split into north, south, east, and west. Select a glowing region to open five threatened animals from that area.",
+    searchLabel: "Search 240 animal records",
     searchButton: "Search",
     searchPlaceholder: "Search vaquita, rhino, penguin, forest, bycatch...",
-    zonesKicker: "28 living zones",
-    zonesTitle: "Continents divided by direction",
+    zonesKicker: "48 living zones",
+    zonesTitle: "Continents and oceans divided by direction",
     panelTitle: "Endangered animals in this region",
     animalsLoaded: "animals loaded",
     openVideo: "Open video",
@@ -41,6 +82,26 @@ const languageCopy = {
     habitat: "Habitat",
     imageTitle: "Species image",
     videoTitle: "Species video",
+    searchResults: "Search results",
+    searchResultsOne: "1 animal found",
+    searchResultsMany: "{count} animals found",
+    directions: { North: "North", South: "South", East: "East", West: "West" },
+    continents: {
+      Africa: "Africa",
+      Antarctica: "Antarctica",
+      Asia: "Asia",
+      Europe: "Europe",
+      "North America": "North America",
+      Oceania: "Oceania",
+      "South America": "South America"
+    },
+    oceans: {
+      "Pacific Ocean": "Pacific Ocean",
+      "Atlantic Ocean": "Atlantic Ocean",
+      "Indian Ocean": "Indian Ocean",
+      "Southern Ocean": "Southern Ocean",
+      "Arctic Ocean": "Arctic Ocean"
+    },
     sourcesBody: "This globe build uses concise educational summaries with population values shown as estimates when exact counts are uncertain. Image panels load animal photographs from public media sources where available and filter out maps, charts, diagrams, and range graphics."
   },
   es: {
@@ -48,25 +109,38 @@ const languageCopy = {
     navArchive: "Archivo",
     navSources: "Fuentes",
     language: "Idioma",
-    heroKicker: "Atlas giratorio de extincion",
+    heroKicker: "Atlas giratorio de extinción",
     heroTitle: "Elige una parte de la Tierra. Escucha lo que casi desaparece.",
     heroBody: "Cada continente se divide en norte, sur, este y oeste. Selecciona una region brillante para abrir cinco animales amenazados.",
-    searchLabel: "Buscar 140 animales",
+    searchLabel: "Buscar 240 animales",
     searchButton: "Buscar",
     searchPlaceholder: "Busca vaquita, rinoceronte, pinguino, bosque...",
-    zonesKicker: "28 zonas vivas",
-    zonesTitle: "Continentes divididos por direccion",
+    zonesKicker: "48 zonas vivas",
+    zonesTitle: "Continentes divididos por dirección",
     panelTitle: "Animales en peligro en esta region",
     animalsLoaded: "animales cargados",
     openVideo: "Abrir video",
     animateImages: "Animar imagenes",
     sourceSuffix: "fuente",
-    population: "Poblacion restante",
+    population: "Población restante",
     where: "Donde",
     body: "Cuerpo",
     habitat: "Habitat",
     imageTitle: "Imagen de la especie",
     videoTitle: "Video de la especie",
+    searchResults: "Resultados de búsqueda",
+    searchResultsOne: "1 animal encontrado",
+    searchResultsMany: "{count} animales encontrados",
+    directions: { North: "Norte", South: "Sur", East: "Este", West: "Oeste" },
+    continents: {
+      Africa: "África",
+      Antarctica: "Antártida",
+      Asia: "Asia",
+      Europe: "Europa",
+      "North America": "América del Norte",
+      Oceania: "Oceanía",
+      "South America": "América del Sur"
+    },
     sourcesBody: "Este globo usa resumenes educativos y estimaciones de poblacion cuando los conteos exactos son inciertos. Las imagenes cargan fotos de animales y filtran mapas, graficas y diagramas."
   },
   fr: {
@@ -77,10 +151,10 @@ const languageCopy = {
     heroKicker: "Atlas rotatif d'extinction",
     heroTitle: "Choisis une partie de la Terre. Ecoute ce qui disparait presque.",
     heroBody: "Chaque continent est divise en nord, sud, est et ouest. Choisis une region lumineuse pour ouvrir cinq animaux menaces.",
-    searchLabel: "Chercher 140 animaux",
+    searchLabel: "Chercher 240 animaux",
     searchButton: "Chercher",
     searchPlaceholder: "Cherche vaquita, rhinoceros, pingouin, foret...",
-    zonesKicker: "28 zones vivantes",
+    zonesKicker: "48 zones vivantes",
     zonesTitle: "Continents divises par direction",
     panelTitle: "Animaux menaces dans cette region",
     animalsLoaded: "animaux charges",
@@ -93,39 +167,295 @@ const languageCopy = {
     habitat: "Habitat",
     imageTitle: "Image de l'espece",
     videoTitle: "Video de l'espece",
+    searchResults: "Résultats de recherche",
+    searchResultsOne: "1 animal trouvé",
+    searchResultsMany: "{count} animaux trouvés",
+    directions: { North: "Nord", South: "Sud", East: "Est", West: "Ouest" },
+    continents: {
+      Africa: "Afrique",
+      Antarctica: "Antarctique",
+      Asia: "Asie",
+      Europe: "Europe",
+      "North America": "Amérique du Nord",
+      Oceania: "Océanie",
+      "South America": "Amérique du Sud"
+    },
     sourcesBody: "Ce globe utilise des resumes educatifs et des estimations quand les comptes exacts sont incertains. Les images chargent des photos d'animaux et filtrent cartes, graphiques et diagrammes."
   },
   hi: {
-    navGlobe: "Globe",
-    navArchive: "Archive",
-    navSources: "Sources",
-    language: "Language",
-    heroKicker: "Rotatable extinction atlas",
-    heroTitle: "Earth ka area choose karo. Jo almost gone hai uski story dekho.",
-    heroBody: "Har continent north, south, east, west me divided hai. Glowing region select karke wahan ke five threatened animals kholo.",
-    searchLabel: "140 animal records search karo",
-    searchButton: "Search",
-    searchPlaceholder: "Vaquita, rhino, penguin, forest search karo...",
-    zonesKicker: "28 living zones",
-    zonesTitle: "Continents direction ke hisaab se divided",
-    panelTitle: "Is region ke endangered animals",
-    animalsLoaded: "animals loaded",
-    openVideo: "Video kholo",
-    animateImages: "Images animate karo",
-    sourceSuffix: "source",
-    population: "Population left",
-    where: "Where",
-    body: "Body",
+    navGlobe: "ग्लोब",
+    navArchive: "संग्रह",
+    navSources: "स्रोत",
+    language: "भाषा",
+    heroKicker: "घूमने वाला विलुप्ति एटलस",
+    heroTitle: "धरती का एक हिस्सा चुनें। जो लगभग खो चुका है, उसे देखें।",
+    heroBody: "हर महाद्वीप उत्तर, दक्षिण, पूर्व और पश्चिम में बंटा है। चमकते क्षेत्र को चुनकर उस जगह के पांच संकटग्रस्त जानवर देखें।",
+    searchLabel: "240 जानवरों के रिकॉर्ड खोजें",
+    searchButton: "खोजें",
+    searchPlaceholder: "वैक्विटा, गैंडा, पेंगुइन, जंगल खोजें...",
+    zonesKicker: "48 जीवित क्षेत्र",
+    zonesTitle: "दिशा के आधार पर विभाजित महाद्वीप",
+    panelTitle: "इस क्षेत्र के संकटग्रस्त जानवर",
+    animalsLoaded: "जानवर लोड हुए",
+    openVideo: "वीडियो खोलें",
+    animateImages: "चित्र चलाएं",
+    sourceSuffix: "स्रोत",
+    population: "बची हुई आबादी",
+    where: "स्थान",
+    body: "शरीर",
+    habitat: "आवास",
+    imageTitle: "प्रजाति का चित्र",
+    videoTitle: "प्रजाति वीडियो",
+    searchResults: "खोज परिणाम",
+    searchResultsOne: "1 जानवर मिला",
+    searchResultsMany: "{count} जानवर मिले",
+    directions: { North: "उत्तर", South: "दक्षिण", East: "पूर्व", West: "पश्चिम" },
+    continents: {
+      Africa: "अफ्रीका",
+      Antarctica: "अंटार्कटिका",
+      Asia: "एशिया",
+      Europe: "यूरोप",
+      "North America": "उत्तरी अमेरिका",
+      Oceania: "ओशिआनिया",
+      "South America": "दक्षिण अमेरिका"
+    },
+    sourcesBody: "यह ग्लोब शिक्षा के लिए छोटे सार और आबादी के अनुमान दिखाता है। चित्रों में जानवरों की तस्वीरें दिखाई जाती हैं और नक्शे, चार्ट तथा आरेख हटाए जाते हैं।"
+  },
+  ar: {
+    navGlobe: "الكرة الأرضية",
+    navArchive: "الأرشيف",
+    navSources: "المصادر",
+    language: "اللغة",
+    heroKicker: "أطلس الانقراض الدوّار",
+    heroTitle: "اختر جزءًا من الأرض. شاهد ما يكاد يختفي.",
+    heroBody: "كل قارة مقسمة إلى شمال وجنوب وشرق وغرب. اختر منطقة مضيئة لعرض خمسة حيوانات مهددة هناك.",
+    searchLabel: "ابحث في 240 سجلًا للحيوانات",
+    searchButton: "بحث",
+    searchPlaceholder: "ابحث عن الفاكيتا أو وحيد القرن أو البطريق أو الغابة...",
+    zonesKicker: "48 منطقة حية",
+    zonesTitle: "القارات مقسمة حسب الاتجاه",
+    panelTitle: "حيوانات مهددة في هذه المنطقة",
+    animalsLoaded: "حيوانات محملة",
+    openVideo: "افتح الفيديو",
+    animateImages: "حرّك الصور",
+    sourceSuffix: "مصدر",
+    population: "العدد المتبقي",
+    where: "المكان",
+    body: "الجسم",
+    habitat: "الموطن",
+    imageTitle: "صورة النوع",
+    videoTitle: "فيديو النوع",
+    searchResults: "نتائج البحث",
+    searchResultsOne: "تم العثور على حيوان واحد",
+    searchResultsMany: "تم العثور على {count} حيوانات",
+    directions: { North: "الشمال", South: "الجنوب", East: "الشرق", West: "الغرب" },
+    continents: {
+      Africa: "أفريقيا",
+      Antarctica: "أنتاركتيكا",
+      Asia: "آسيا",
+      Europe: "أوروبا",
+      "North America": "أمريكا الشمالية",
+      Oceania: "أوقيانوسيا",
+      "South America": "أمريكا الجنوبية"
+    },
+    sourcesBody: "يعرض هذا المجسم ملخصات تعليمية وتقديرات للسكان عندما لا تكون الأعداد الدقيقة مؤكدة. تعرض الصور صورًا للحيوانات وتستبعد الخرائط والرسوم البيانية."
+  },
+  zh: {
+    navGlobe: "地球",
+    navArchive: "档案",
+    navSources: "来源",
+    language: "语言",
+    heroKicker: "可旋转的灭绝图谱",
+    heroTitle: "选择地球上的一片区域，看看即将消失的生命。",
+    heroBody: "每个大陆分为北、南、东、西四个部分。选择发光区域，查看该地区的五种濒危动物。",
+    searchLabel: "搜索 240 条动物记录",
+    searchButton: "搜索",
+    searchPlaceholder: "搜索小头鼠海豚、犀牛、企鹅、森林...",
+    zonesKicker: "48 个生命区域",
+    zonesTitle: "按方向划分的大陆",
+    panelTitle: "该区域的濒危动物",
+    animalsLoaded: "种动物已加载",
+    openVideo: "打开视频",
+    animateImages: "动画图片",
+    sourceSuffix: "来源",
+    population: "剩余数量",
+    where: "地点",
+    body: "身体",
+    habitat: "栖息地",
+    imageTitle: "物种图片",
+    videoTitle: "物种视频",
+    searchResults: "搜索结果",
+    searchResultsOne: "找到 1 种动物",
+    searchResultsMany: "找到 {count} 种动物",
+    directions: { North: "北部", South: "南部", East: "东部", West: "西部" },
+    continents: {
+      Africa: "非洲",
+      Antarctica: "南极洲",
+      Asia: "亚洲",
+      Europe: "欧洲",
+      "North America": "北美洲",
+      Oceania: "大洋洲",
+      "South America": "南美洲"
+    },
+    sourcesBody: "这个地球使用简短的教育摘要，并在准确数量不确定时显示估计值。图片面板加载动物照片，并过滤地图、图表和分布图。"
+  },
+  ja: {
+    navGlobe: "地球",
+    navArchive: "アーカイブ",
+    navSources: "出典",
+    language: "言語",
+    heroKicker: "回転する絶滅アトラス",
+    heroTitle: "地球の一部を選び、消えかけている命を見てください。",
+    heroBody: "各大陸は北・南・東・西に分かれています。光る地域を選ぶと、その地域の絶滅危惧動物が5種表示されます。",
+    searchLabel: "240件の動物記録を検索",
+    searchButton: "検索",
+    searchPlaceholder: "コガシラネズミイルカ、サイ、ペンギン、森を検索...",
+    zonesKicker: "48の生きた地域",
+    zonesTitle: "方向ごとに分けた大陸",
+    panelTitle: "この地域の絶滅危惧動物",
+    animalsLoaded: "種の動物を表示中",
+    openVideo: "動画を開く",
+    animateImages: "画像を動かす",
+    sourceSuffix: "出典",
+    population: "残りの個体数",
+    where: "場所",
+    body: "体",
+    habitat: "生息地",
+    imageTitle: "種の画像",
+    videoTitle: "種の動画",
+    searchResults: "検索結果",
+    searchResultsOne: "1種の動物が見つかりました",
+    searchResultsMany: "{count}種の動物が見つかりました",
+    directions: { North: "北", South: "南", East: "東", West: "西" },
+    continents: {
+      Africa: "アフリカ",
+      Antarctica: "南極大陸",
+      Asia: "アジア",
+      Europe: "ヨーロッパ",
+      "North America": "北アメリカ",
+      Oceania: "オセアニア",
+      "South America": "南アメリカ"
+    },
+    sourcesBody: "この地球儀は教育用の短い要約と、正確な数が不明な場合の推定値を表示します。画像は動物写真を優先し、地図や図表を除外します。"
+  },
+  pt: {
+    navGlobe: "Globo",
+    navArchive: "Arquivo",
+    navSources: "Fontes",
+    language: "Idioma",
+    heroKicker: "Atlas giratório da extinção",
+    heroTitle: "Escolha uma parte da Terra. Veja o que está quase desaparecendo.",
+    heroBody: "Cada continente é dividido em norte, sul, leste e oeste. Selecione uma região brilhante para ver cinco animais ameaçados.",
+    searchLabel: "Pesquisar 240 registros de animais",
+    searchButton: "Pesquisar",
+    searchPlaceholder: "Pesquise vaquita, rinoceronte, pinguim, floresta...",
+    zonesKicker: "48 zonas vivas",
+    zonesTitle: "Continentes divididos por direção",
+    panelTitle: "Animais ameaçados nesta região",
+    animalsLoaded: "animais carregados",
+    openVideo: "Abrir vídeo",
+    animateImages: "Animar imagens",
+    sourceSuffix: "fonte",
+    population: "População restante",
+    where: "Onde",
+    body: "Corpo",
     habitat: "Habitat",
-    imageTitle: "Species image",
-    videoTitle: "Species video",
-    sourcesBody: "Ye globe educational summaries aur population estimates use karta hai. Images animal photos load karti hain aur maps, charts, diagrams filter karti hain."
+    imageTitle: "Imagem da espécie",
+    videoTitle: "Vídeo da espécie",
+    searchResults: "Resultados da pesquisa",
+    searchResultsOne: "1 animal encontrado",
+    searchResultsMany: "{count} animais encontrados",
+    directions: { North: "Norte", South: "Sul", East: "Leste", West: "Oeste" },
+    continents: {
+      Africa: "África",
+      Antarctica: "Antártida",
+      Asia: "Ásia",
+      Europe: "Europa",
+      "North America": "América do Norte",
+      Oceania: "Oceania",
+      "South America": "América do Sul"
+    },
+    sourcesBody: "Este globo usa resumos educativos e estimativas de população quando os números exatos são incertos. As imagens carregam fotos de animais e filtram mapas, gráficos e diagramas."
+  },
+  sw: {
+    navGlobe: "Dunia",
+    navArchive: "Kumbukumbu",
+    navSources: "Vyanzo",
+    language: "Lugha",
+    heroKicker: "Atlasi inayozunguka ya kutoweka",
+    heroTitle: "Chagua sehemu ya Dunia. Ona maisha yanayokaribia kutoweka.",
+    heroBody: "Kila bara limegawanywa kaskazini, kusini, mashariki na magharibi. Chagua eneo linalong'aa kuona wanyama watano walio hatarini.",
+    searchLabel: "Tafuta rekodi 240 za wanyama",
+    searchButton: "Tafuta",
+    searchPlaceholder: "Tafuta vaquita, faru, pengwini, msitu...",
+    zonesKicker: "Maeneo hai 48",
+    zonesTitle: "Mabara yaliyogawanywa kwa mwelekeo",
+    panelTitle: "Wanyama walio hatarini katika eneo hili",
+    animalsLoaded: "wanyama wamepakiwa",
+    openVideo: "Fungua video",
+    animateImages: "Huisha picha",
+    sourceSuffix: "chanzo",
+    population: "Idadi iliyobaki",
+    where: "Mahali",
+    body: "Mwili",
+    habitat: "Makazi",
+    imageTitle: "Picha ya spishi",
+    videoTitle: "Video ya spishi",
+    searchResults: "Matokeo ya utafutaji",
+    searchResultsOne: "Mnyama 1 amepatikana",
+    searchResultsMany: "Wanyama {count} wamepatikana",
+    directions: { North: "Kaskazini", South: "Kusini", East: "Mashariki", West: "Magharibi" },
+    continents: {
+      Africa: "Afrika",
+      Antarctica: "Antaktika",
+      Asia: "Asia",
+      Europe: "Ulaya",
+      "North America": "Amerika Kaskazini",
+      Oceania: "Oceania",
+      "South America": "Amerika Kusini"
+    },
+    sourcesBody: "Globu hii hutumia muhtasari wa elimu na makadirio ya idadi wakati hesabu kamili hazijulikani. Picha huonyesha wanyama na kuchuja ramani, chati na michoro."
+  },
+  id: {
+    navGlobe: "Globe",
+    navArchive: "Arsip",
+    navSources: "Sumber",
+    language: "Bahasa",
+    heroKicker: "Atlas kepunahan yang dapat diputar",
+    heroTitle: "Pilih bagian Bumi. Lihat kehidupan yang hampir hilang.",
+    heroBody: "Setiap benua dibagi menjadi utara, selatan, timur, dan barat. Pilih wilayah bercahaya untuk melihat lima hewan terancam.",
+    searchLabel: "Cari 240 catatan hewan",
+    searchButton: "Cari",
+    searchPlaceholder: "Cari vaquita, badak, penguin, hutan...",
+    zonesKicker: "48 zona hidup",
+    zonesTitle: "Benua dibagi berdasarkan arah",
+    panelTitle: "Hewan terancam di wilayah ini",
+    animalsLoaded: "hewan dimuat",
+    openVideo: "Buka video",
+    animateImages: "Animasikan gambar",
+    sourceSuffix: "sumber",
+    population: "Populasi tersisa",
+    where: "Lokasi",
+    body: "Tubuh",
+    habitat: "Habitat",
+    imageTitle: "Gambar spesies",
+    videoTitle: "Video spesies",
+    searchResults: "Hasil pencarian",
+    searchResultsOne: "1 hewan ditemukan",
+    searchResultsMany: "{count} hewan ditemukan",
+    directions: { North: "Utara", South: "Selatan", East: "Timur", West: "Barat" },
+    continents: {
+      Africa: "Afrika",
+      Antarctica: "Antarktika",
+      Asia: "Asia",
+      Europe: "Eropa",
+      "North America": "Amerika Utara",
+      Oceania: "Oseania",
+      "South America": "Amerika Selatan"
+    },
+    sourcesBody: "Globe ini memakai ringkasan edukatif dan perkiraan populasi saat angka pasti belum jelas. Panel gambar memuat foto hewan dan menyaring peta, grafik, serta diagram."
   }
 };
-
-["ar", "zh", "ja", "pt", "sw", "id"].forEach((language) => {
-  languageCopy[language] = { ...languageCopy.en };
-});
 
 const animalTemplates = {
   mammal: {
@@ -398,6 +728,154 @@ const speciesByRegion = {
   ]
 };
 
+const oceanSpeciesByRegion = {
+  "Pacific Ocean-North": [
+    a("North Pacific Right Whale", "Eubalaena japonica", "Endangered", "Estimate: very few hundred individuals", "marine", "North Pacific feeding and migration waters", "Historic whaling, ship strikes, entanglement, and noise keep recovery slow.", "NOAA"),
+    a("Hawaiian Monk Seal", "Neomonachus schauinslandi", "Endangered", "Estimate: around 1,600 individuals", "marine", "Hawaiian islands and surrounding Pacific waters", "Entanglement, disease, food limits, and disturbed pupping beaches threaten pups.", "NOAA"),
+    a("Short-tailed Albatross", "Phoebastria albatrus", "Vulnerable", "Recovering from a tiny remnant population", "bird", "North Pacific islands and open ocean", "Volcanic risk, bycatch, plastics, and storm impacts threaten breeding colonies.", "BirdLife"),
+    a("Pacific Bluefin Tuna", "Thunnus orientalis", "Near threatened", "Population reduced by heavy fishing pressure", "fish", "North Pacific temperate waters", "Overfishing of young fish and high market demand keep stocks vulnerable.", "IUCN"),
+    a("Steller Sea Lion", "Eumetopias jubatus", "Near threatened", "Regional trends vary across the North Pacific", "marine", "North Pacific coasts and island rookeries", "Prey shifts, entanglement, disturbance, and climate change affect colonies.", "IUCN")
+  ],
+  "Pacific Ocean-South": [
+    a("Antipodean Albatross", "Diomedea antipodensis", "Endangered", "Breeding population declining", "bird", "South Pacific and subantarctic breeding islands", "Longline bycatch and slow breeding cause serious adult losses.", "BirdLife"),
+    a("New Zealand Sea Lion", "Phocarctos hookeri", "Endangered", "Estimate: several thousand individuals", "marine", "Subantarctic islands and southern New Zealand waters", "Disease, fishing interactions, and limited breeding sites constrain recovery.", "IUCN"),
+    a("Hector's Dolphin", "Cephalorhynchus hectori", "Endangered", "Estimate: several thousand individuals", "marine", "Coastal waters around New Zealand", "Set nets, trawling, pollution, and boat disturbance threaten small groups.", "Whale & Dolphin Conservation"),
+    a("Fiordland Crested Penguin", "Eudyptes pachyrhynchus", "Vulnerable", "Estimate: a few thousand mature individuals", "bird", "Southwest New Zealand coasts and nearby seas", "Predators, disease, disturbance, and marine food shifts reduce breeding success.", "BirdLife"),
+    a("Southern Bluefin Tuna", "Thunnus maccoyii", "Endangered", "Recovering from severe overfishing", "fish", "Temperate southern oceans, including the South Pacific", "High-value fisheries and slow rebuilding leave the stock vulnerable.", "IUCN")
+  ],
+  "Pacific Ocean-East": [
+    a("Eastern Pacific Hawksbill Turtle", "Eretmochelys imbricata", "Critically endangered", "Nesting groups remain very small", "reptile", "Mangrove estuaries and tropical eastern Pacific coasts", "Egg harvest, bycatch, coastal loss, and shell trade history threaten recovery.", "IUCN"),
+    a("Guadalupe Fur Seal", "Arctocephalus townsendi", "Least concern but conservation-dependent", "Recovered but still monitored closely", "marine", "Eastern Pacific islands and feeding waters", "Entanglement, prey changes, disease, and disturbance can affect colonies.", "NOAA"),
+    a("Eastern Pacific Green Turtle", "Chelonia mydas agassizii", "Endangered in parts", "Nesting colonies recovering unevenly", "reptile", "Eastern Pacific coastal waters and nesting beaches", "Bycatch, boat strikes, egg harvest history, and habitat loss remain threats.", "NOAA"),
+    a("Galapagos Sea Lion", "Zalophus wollebaeki", "Endangered", "Population fluctuates with ocean conditions", "marine", "Galapagos islands and eastern tropical Pacific waters", "El Nino events, disease, entanglement, and disturbance affect survival.", "IUCN"),
+    a("Scalloped Hammerhead", "Sphyrna lewini", "Critically endangered", "Global population heavily reduced", "fish", "Eastern Pacific seamounts, coasts, and migration routes", "Fin trade, bycatch, and slow reproduction drive steep declines.", "IUCN")
+  ],
+  "Pacific Ocean-West": [
+    a("Dugong", "Dugong dugon", "Vulnerable", "Local populations declining across much of the range", "marine", "Seagrass meadows of the western Pacific and Indo-Pacific", "Seagrass loss, boat strikes, hunting, and net entanglement threaten slow breeders.", "IUCN"),
+    a("Irrawaddy Dolphin", "Orcaella brevirostris", "Endangered", "Small coastal and river populations remain", "marine", "Western Pacific coasts, estuaries, and rivers", "Bycatch, vessel traffic, pollution, and river development isolate groups.", "IUCN"),
+    a("Green Sawfish", "Pristis zijsron", "Critically endangered", "Greatly reduced across its former range", "fish", "Western Pacific and northern Australian coastal waters", "Net bycatch and habitat loss hit shallow-water nursery areas.", "IUCN"),
+    a("Olive Ridley Turtle", "Lepidochelys olivacea", "Vulnerable", "Large nesting groups remain but many are declining", "reptile", "Tropical western Pacific and Indo-Pacific waters", "Bycatch, egg harvest, plastics, and beach disturbance affect nesting success.", "IUCN"),
+    a("Zebra Shark", "Stegostoma tigrinum", "Endangered", "Declining in many western Pacific reefs", "fish", "Coral reefs and sandy flats of the western Pacific", "Fishing, fin trade, and reef degradation reduce adults and nursery habitat.", "IUCN")
+  ],
+  "Atlantic Ocean-North": [
+    a("Blue Shark", "Prionace glauca", "Near threatened", "Large population but heavily fished", "fish", "Temperate and tropical North Atlantic waters", "Bycatch and targeted shark fisheries remove many adults each year.", "IUCN"),
+    a("Roseate Tern", "Sterna dougallii", "Least concern globally but endangered in parts", "Regional colonies remain vulnerable", "bird", "North Atlantic islands and coastal feeding waters", "Disturbance, predators, storms, and food shifts affect nesting colonies.", "BirdLife"),
+    a("Porbeagle Shark", "Lamna nasus", "Vulnerable", "North Atlantic stocks depleted", "fish", "Cool North Atlantic waters", "Overfishing and bycatch reduce this slow-growing shark.", "IUCN"),
+    a("North Atlantic Humpback Whale", "Megaptera novaeangliae", "Recovered but monitored", "Most groups increasing, with local risks", "marine", "North Atlantic migration and feeding grounds", "Entanglement, ship strikes, underwater noise, and prey shifts remain threats.", "NOAA"),
+    a("Sargassum Fish", "Histrio histrio", "Climate-sensitive", "Population not precisely counted", "fish", "Floating Sargassum mats in the North Atlantic", "Loss or movement of Sargassum habitat affects shelter and nursery zones.", "IUCN")
+  ],
+  "Atlantic Ocean-South": [
+    a("Tristan Albatross", "Diomedea dabbenena", "Critically endangered", "Very small breeding population", "bird", "South Atlantic islands and open ocean", "Introduced mice at nesting sites and longline bycatch threaten adults and chicks.", "BirdLife"),
+    a("Atlantic Yellow-nosed Albatross", "Thalassarche chlororhynchos", "Endangered", "Population declining", "bird", "South Atlantic breeding islands and feeding waters", "Fishing bycatch, disease, and storm impacts reduce colonies.", "BirdLife"),
+    a("Subantarctic Fur Seal", "Arctocephalus tropicalis tropicalis", "Recovered but monitored", "Large colonies with regional sensitivity", "marine", "South Atlantic subantarctic islands", "Entanglement, disturbance, and climate-driven prey changes remain risks.", "IUCN"),
+    a("Sei Whale Atlantic Population", "Balaenoptera borealis borealis", "Endangered", "Recovering unevenly after whaling", "marine", "Open waters of the South Atlantic", "Historic whaling, ship strikes, noise, and prey disruption slow recovery.", "NOAA"),
+    a("Bigeye Tuna", "Thunnus obesus", "Vulnerable", "Stocks pressured by industrial fishing", "fish", "Tropical and subtropical Atlantic waters", "Overfishing and bycatch in tuna fisheries keep populations under stress.", "IUCN")
+  ],
+  "Atlantic Ocean-East": [
+    a("Mediterranean Angelshark", "Squatina squatina atlanticus", "Critically endangered", "Rare across much of the eastern Atlantic", "fish", "Sandy seabeds of the eastern Atlantic and nearby seas", "Bottom trawling and bycatch devastated shallow seabed habitat.", "IUCN"),
+    a("Madeiran Storm Petrel", "Hydrobates castro", "Vulnerable in parts", "Island colonies remain sensitive", "bird", "Eastern Atlantic islands and offshore feeding waters", "Predators, lights, storms, and limited nesting sites threaten colonies.", "BirdLife"),
+    a("Harbour Porpoise Iberian Population", "Phocoena phocoena meridionalis", "Vulnerable regionally", "Regional abundance uncertain", "marine", "Eastern Atlantic shelf waters", "Bycatch, prey loss, and noise affect coastal groups.", "IUCN"),
+    a("Common Skate", "Dipturus batis", "Critically endangered", "Greatly reduced in European waters", "fish", "Northeast Atlantic continental shelf", "Bottom fishing and slow reproduction caused major range loss.", "IUCN"),
+    a("Loggerhead Turtle Atlantic East", "Caretta caretta caretta", "Vulnerable", "Nesting and juvenile numbers vary by beach", "reptile", "Eastern Atlantic feeding zones and nesting routes", "Bycatch, plastic, warming beaches, and coastal lighting threaten survival.", "IUCN")
+  ],
+  "Atlantic Ocean-West": [
+    a("Smalltooth Sawfish", "Pristis pectinata", "Critically endangered", "Reduced to a fraction of former range", "fish", "Western Atlantic and Caribbean shallow coasts", "Gillnets, habitat loss, and slow maturity drove severe decline.", "NOAA"),
+    a("West Indian Manatee", "Trichechus manatus", "Vulnerable", "Regional populations vary widely", "marine", "Western Atlantic, Caribbean coasts, rivers, and lagoons", "Boat strikes, cold stress, habitat loss, and entanglement threaten adults.", "IUCN"),
+    a("Elkhorn Coral", "Acropora palmata", "Critically endangered", "Caribbean populations severely reduced", "marine", "Western Atlantic and Caribbean reefs", "Bleaching, disease, storms, and water pollution damage reef colonies.", "NOAA"),
+    a("Queen Conch", "Aliger gigas", "Vulnerable", "Overharvested in many Caribbean areas", "marine", "Caribbean seagrass beds and sandy flats", "Overfishing and habitat degradation reduce breeding densities.", "IUCN"),
+    a("Nassau Grouper", "Epinephelus striatus", "Critically endangered", "Spawning aggregations collapsed in many sites", "fish", "Western Atlantic and Caribbean reefs", "Overfishing of predictable spawning groups caused steep decline.", "IUCN")
+  ],
+  "Indian Ocean-North": [
+    a("Arabian Sea Humpback Whale", "Megaptera novaeangliae indica", "Endangered", "Estimate: fewer than 100 individuals", "marine", "Arabian Sea coastal and offshore waters", "Ship strikes, entanglement, noise, and tiny population size threaten recovery.", "Whale & Dolphin Conservation"),
+    a("Indian Ocean Humpback Dolphin", "Sousa plumbea", "Endangered", "Coastal populations declining", "marine", "Northern Indian Ocean coasts and estuaries", "Fishing nets, coastal development, vessel traffic, and pollution threaten groups.", "IUCN"),
+    a("Green Turtle Northern Indian Ocean", "Chelonia mydas mydas", "Endangered in parts", "Nesting trends vary by country", "reptile", "Northern Indian Ocean feeding grounds and nesting beaches", "Bycatch, egg harvest history, seagrass loss, and coastal lighting affect nesting.", "NOAA"),
+    a("Whale Shark Arabian Sea", "Rhincodon typus", "Endangered", "Global population declining", "fish", "Warm northern Indian Ocean waters", "Ship strikes, fisheries bycatch, and demand for fins and meat reduce adults.", "IUCN"),
+    a("Dwarf Sawfish", "Pristis clavata", "Endangered", "Very rare outside protected shallow habitats", "fish", "Northern Indian Ocean and northern Australian coastal waters", "Gillnets and loss of estuary nurseries threaten sawfish pups.", "IUCN")
+  ],
+  "Indian Ocean-South": [
+    a("Amsterdam Albatross Indian Ocean", "Diomedea amsterdamensis amsterdamensis", "Endangered", "Estimate: around 200 individuals", "bird", "Amsterdam Island and southern Indian Ocean", "A single breeding island, disease, and bycatch create extreme vulnerability.", "BirdLife"),
+    a("Indian Ocean Blue Whale", "Balaenoptera musculus indica", "Endangered", "Recovering from whaling; exact count uncertain", "marine", "Tropical and southern Indian Ocean waters", "Ship strikes, noise, fishing gear, and historical whaling affect recovery.", "NOAA"),
+    a("Southern Rockhopper Penguin Indian Ocean", "Eudyptes chrysocome filholi", "Vulnerable", "Colonies declining in parts", "bird", "Southern Indian Ocean islands", "Food shifts, warming seas, disease, and fisheries pressure reduce breeding success.", "BirdLife"),
+    a("Patagonian Toothfish Indian Ocean", "Dissostichus eleginoides", "Conservation-dependent", "Managed stocks vary by area", "fish", "Deep southern Indian Ocean slopes", "Illegal fishing, bycatch, and slow growth require careful fishery control.", "IUCN"),
+    a("Antarctic Fur Seal Indian Ocean", "Arctocephalus gazella", "Recovered but climate-sensitive", "Large population with regional changes", "marine", "Southern Indian Ocean islands and feeding waters", "Entanglement, disturbance, and krill shifts can affect colonies.", "IUCN")
+  ],
+  "Indian Ocean-East": [
+    a("Manta Ray Indian Ocean", "Mobula alfredi", "Vulnerable", "Many reef populations declining", "fish", "Eastern Indian Ocean reefs and cleaning stations", "Gill plates trade, bycatch, and tourism disturbance threaten slow breeders.", "IUCN"),
+    a("Banggai Cardinalfish", "Pterapogon kauderni", "Endangered", "Small island range with fragmented colonies", "fish", "Indonesian reefs near the eastern Indian Ocean gateway", "Aquarium trade, habitat loss, and tiny range threaten wild groups.", "IUCN"),
+    a("Hawksbill Turtle Eastern Indian Ocean", "Eretmochelys imbricata bissa", "Critically endangered", "Nesting colonies remain reduced", "reptile", "Eastern Indian Ocean reefs and beaches", "Shell trade history, bycatch, reef loss, and egg harvest reduce recovery.", "IUCN"),
+    a("Narrow Sawfish", "Anoxypristis cuspidata", "Endangered", "Declining across Indo-West Pacific coasts", "fish", "Eastern Indian Ocean estuaries and shallow seas", "Gillnet bycatch and nursery habitat loss remove juveniles and adults.", "IUCN"),
+    a("Australian Sea Lion Indian Ocean Coast", "Neophoca cinerea", "Endangered", "Small colonies with slow recovery", "marine", "Western and southern Australian coastal waters", "Fishing gear interactions, disease, and low breeding rate threaten colonies.", "IUCN")
+  ],
+  "Indian Ocean-West": [
+    a("Coelacanth", "Latimeria chalumnae", "Critically endangered", "Small deep-reef populations", "fish", "Western Indian Ocean deep volcanic slopes", "Bycatch, tiny range, and slow reproduction make recovery difficult.", "IUCN"),
+    a("Dugong Western Indian Ocean", "Dugong dugon indicus", "Vulnerable", "Local groups declining", "marine", "Seagrass meadows of East Africa and island lagoons", "Seagrass loss, hunting, boat strikes, and net entanglement threaten adults.", "IUCN"),
+    a("Aldabra Giant Tortoise Coastal Population", "Aldabrachelys gigantea", "Vulnerable", "Island population protected but climate-sensitive", "reptile", "Western Indian Ocean islands and coastal scrub", "Sea-level rise, invasive species, and limited island range create risk.", "IUCN"),
+    a("Radiated Turtle Coastal Madagascar", "Astrochelys radiata", "Critically endangered", "Wild population sharply reduced", "reptile", "Madagascar coastal scrub near the western Indian Ocean", "Illegal collection and habitat loss threaten remaining groups.", "IUCN"),
+    a("Wedge-tailed Shearwater Western Indian Ocean", "Ardenna pacifica", "Least concern but locally threatened", "Colonies vary by island", "bird", "Western Indian Ocean islands and open water", "Invasive predators, plastics, and lights threaten nesting colonies.", "BirdLife")
+  ],
+  "Southern Ocean-North": [
+    a("Southern Royal Albatross", "Diomedea epomophora", "Vulnerable", "Population recovering but still limited", "bird", "Subantarctic islands and Southern Ocean waters", "Longline bycatch, storms, and limited nesting sites threaten adults.", "BirdLife"),
+    a("Antarctic Fur Seal", "Arctocephalus gazella", "Least concern but climate-sensitive", "Recovered strongly after sealing", "marine", "Subantarctic islands and Southern Ocean feeding zones", "Krill shifts, entanglement, and disturbance could affect breeding colonies.", "IUCN"),
+    a("King Penguin", "Aptenodytes patagonicus", "Least concern but climate-sensitive", "Large population but food webs are shifting", "bird", "Subantarctic islands and polar frontal waters", "Ocean warming can move prey away from breeding colonies.", "BirdLife"),
+    a("Southern Right Whale", "Eubalaena australis", "Least concern globally; regional recovery varies", "Recovering from whaling in many areas", "marine", "Southern Ocean migration and calving waters", "Entanglement, ship strikes, and climate-driven food changes remain concerns.", "NOAA"),
+    a("White-chinned Petrel", "Procellaria aequinoctialis", "Vulnerable", "Large but declining population", "bird", "Southern Ocean and subantarctic islands", "Longline bycatch and invasive predators at colonies drive declines.", "BirdLife")
+  ],
+  "Southern Ocean-South": [
+    a("Emperor Penguin Southern Ocean", "Aptenodytes forsteri forsteri", "Near threatened", "Projected to decline with sea-ice loss", "bird", "Antarctic sea ice and coastal breeding colonies", "Unstable sea ice can cause chick mortality and colony failure.", "IUCN"),
+    a("Antarctic Toothfish", "Dissostichus mawsoni", "Data deficient in some areas", "Managed fishery; ecosystem role important", "fish", "Deep Antarctic shelf and slope waters", "Fishing pressure and slow growth require careful monitoring.", "IUCN"),
+    a("Crabeater Seal", "Lobodon carcinophaga", "Least concern but ice-dependent", "Abundant but difficult to count precisely", "marine", "Antarctic pack ice and krill-rich waters", "Sea-ice loss and krill shifts could affect feeding and breeding.", "IUCN"),
+    a("Snow Petrel", "Pagodroma nivea", "Least concern but ice-sensitive", "Population uncertain in remote colonies", "bird", "Antarctic ice edge, cliffs, and offshore waters", "Climate change can alter sea ice, prey access, and nesting conditions.", "BirdLife"),
+    a("Antarctic Silverfish", "Pleuragramma antarctica", "Keystone species under pressure", "Abundant but regionally sensitive", "fish", "Antarctic shelf waters", "Warming, ice change, and food-web shifts can affect this key prey species.", "IUCN")
+  ],
+  "Southern Ocean-East": [
+    a("Eastern Rockhopper Penguin", "Eudyptes filholi", "Vulnerable", "Long-term declines in some colonies", "bird", "Southern Ocean islands east of the Indian Ocean sector", "Food changes, disease, storms, and fisheries pressure reduce breeding.", "BirdLife"),
+    a("Kerguelen Shag", "Leucocarbo verrucosus", "Near threatened", "Small island range", "bird", "Kerguelen Islands and nearby Southern Ocean coasts", "Restricted breeding sites, disturbance, and marine food shifts create risk.", "BirdLife"),
+    a("Minke Whale Southern Ocean East", "Balaenoptera bonaerensis orientalis", "Data deficient in some assessments", "Population uncertain", "marine", "Eastern Southern Ocean pack-ice waters", "Climate change, noise, and prey shifts are key concerns.", "IUCN"),
+    a("Grey Petrel", "Procellaria cinerea", "Near threatened", "Population declining in parts", "bird", "Southern Ocean islands and open seas", "Longline bycatch and invasive predators reduce breeding success.", "BirdLife"),
+    a("Leopard Seal", "Hydrurga leptonyx", "Least concern but monitored", "Population not precisely counted", "marine", "Antarctic pack ice and subantarctic waters", "Sea-ice change and prey shifts may alter hunting and breeding habitat.", "IUCN")
+  ],
+  "Southern Ocean-West": [
+    a("Black-browed Albatross", "Thalassarche melanophris", "Least concern globally; some colonies vulnerable", "Regional trends vary", "bird", "South Atlantic and western Southern Ocean", "Fishing bycatch and storm impacts remain major pressures.", "BirdLife"),
+    a("South Georgia Pipit", "Anthus antarcticus", "Near threatened", "Recovered locally after predator control", "bird", "South Georgia coastal grasslands", "Restricted island range and climate impacts keep it vulnerable.", "BirdLife"),
+    a("Southern Elephant Seal Western Colonies", "Mirounga leonina occidentalis", "Least concern but regionally variable", "Some colonies declined", "marine", "Western Southern Ocean breeding beaches and feeding waters", "Climate-driven prey changes and disturbance affect some colonies.", "IUCN"),
+    a("Gentoo Penguin Southern Ocean West", "Pygoscelis papua ellsworthi", "Least concern but locally sensitive", "Regional trends vary strongly", "bird", "Antarctic Peninsula and western Southern Ocean islands", "Food-web shifts, disturbance, and weather extremes affect colony success.", "BirdLife"),
+    a("Antarctic Krill Western Southern Ocean", "Euphausia superba occidentalis", "Keystone species under pressure", "Extremely abundant but regionally stressed", "marine", "Western Southern Ocean krill grounds", "Fishing pressure and warming threaten food webs for whales, seals, and penguins.", "IUCN")
+  ],
+  "Arctic Ocean-North": [
+    a("Bowhead Whale", "Balaena mysticetus", "Least concern globally; some stocks vulnerable", "Recovering unevenly by population", "marine", "High Arctic sea ice and shelf waters", "Ship noise, climate change, and industrial activity affect migration and feeding.", "NOAA"),
+    a("Narwhal", "Monodon monoceros", "Near threatened", "Regional populations vary", "marine", "High Arctic bays, fjords, and pack ice", "Sea-ice change, noise, hunting pressure, and shipping affect migration.", "IUCN"),
+    a("Ivory Gull Arctic Ocean", "Pagophila eburnea borealis", "Near threatened", "Declining in several regions", "bird", "High Arctic sea ice and coastal colonies", "Sea-ice loss, pollutants, and changing food webs threaten colonies.", "BirdLife"),
+    a("Polar Cod", "Boreogadus saida", "Climate-sensitive", "Abundant but shifting with warming", "fish", "High Arctic waters and under-ice habitats", "Sea-ice loss and warming may reduce nursery habitat and prey access.", "IUCN"),
+    a("Ringed Seal Arctic Ocean", "Pusa hispida hispida", "Least concern but ice-dependent", "Abundant but hard to count precisely", "marine", "Arctic sea ice and snow lairs", "Reduced snow and unstable ice threaten pup survival.", "IUCN")
+  ],
+  "Arctic Ocean-South": [
+    a("Walrus", "Odobenus rosmarus", "Vulnerable in some regions", "Regional populations vary", "marine", "Arctic shelves, sea ice, and coastal haulouts", "Sea-ice loss, disturbance, and crowding at land haulouts threaten calves.", "IUCN"),
+    a("Beluga Whale", "Delphinapterus leucas", "Least concern globally; some stocks endangered", "Regional stocks vary from stable to endangered", "marine", "Arctic and subarctic coastal waters", "Noise, contaminants, ship traffic, and habitat change affect coastal groups.", "NOAA"),
+    a("Spectacled Eider", "Somateria fischeri", "Near threatened", "Breeding populations reduced", "bird", "Arctic coasts, lagoons, and sea-ice feeding areas", "Lead, oil risk, predators, and changing sea ice affect survival.", "BirdLife"),
+    a("Arctic Char", "Salvelinus alpinus", "Climate-sensitive", "Local populations vary", "fish", "Arctic coastal waters, lakes, and rivers", "Warming water, altered food webs, and fishing pressure affect local stocks.", "IUCN"),
+    a("Bearded Seal", "Erignathus barbatus", "Least concern but ice-dependent", "Population not precisely counted", "marine", "Shallow Arctic shelves and drifting sea ice", "Sea-ice loss and disturbance can affect pupping and feeding habitat.", "IUCN")
+  ],
+  "Arctic Ocean-East": [
+    a("Laptev Sea Walrus", "Odobenus rosmarus laptevi", "Data deficient", "Population uncertain", "marine", "Eastern Arctic shelf waters", "Sea-ice loss, shipping, and disturbance at haulouts increase risk.", "IUCN"),
+    a("Ross's Gull", "Rhodostethia rosea", "Least concern but rare", "Small, scattered breeding population", "bird", "Eastern Arctic wetlands and sea-ice edge", "Climate shifts and disturbance may affect remote nesting habitat.", "BirdLife"),
+    a("Siberian Eider", "Polysticta stelleri", "Vulnerable", "Population declining in parts", "bird", "Eastern Arctic coasts and marine feeding zones", "Oil risk, hunting, lead, and changing ice conditions threaten flocks.", "BirdLife"),
+    a("Greenland Shark Arctic East", "Somniosus microcephalus orientalis", "Vulnerable", "Slow-growing population vulnerable to bycatch", "fish", "Deep Arctic and subarctic waters", "Bycatch and extremely slow maturity make recovery difficult.", "IUCN"),
+    a("Ribbon Seal", "Histriophoca fasciata", "Least concern but ice-sensitive", "Population uncertain in remote seas", "marine", "Seasonal ice of the North Pacific Arctic gateway", "Sea-ice loss and prey shifts may alter breeding and molting habitat.", "IUCN")
+  ],
+  "Arctic Ocean-West": [
+    a("Kittlitz's Murrelet", "Brachyramphus brevirostris", "Near threatened", "Population declining in parts", "bird", "Alaska coastal glaciers and Arctic marine waters", "Glacier retreat, oil risk, and food-web shifts threaten nesting and feeding.", "BirdLife"),
+    a("Pacific Walrus", "Odobenus rosmarus divergens", "Vulnerable in some assessments", "Large population with climate pressure", "marine", "Bering, Chukchi, and western Arctic shelves", "Sea-ice loss forces longer swims and crowded land haulouts.", "IUCN"),
+    a("Arctic Gray Whale Western Stock", "Eschrichtius robustus occidentalis", "Endangered", "Very small western stock", "marine", "Western Arctic feeding waters and North Pacific migration routes", "Entanglement, ship strikes, noise, and industrial activity threaten recovery.", "NOAA"),
+    a("Spectacled Eider Western Arctic", "Somateria fischeri occidentalis", "Near threatened", "Western populations remain vulnerable", "bird", "Western Arctic lagoons, coasts, and sea ice", "Lead exposure, oil risk, predators, and changing ice affect survival.", "BirdLife"),
+    a("Arctic Skate", "Amblyraja hyperborea", "Data deficient", "Population uncertain", "fish", "Deep western Arctic and subarctic seafloor", "Bottom fishing, warming, and slow life history may create risk.", "IUCN")
+  ]
+};
+
+const combinedSpeciesByRegion = {
+  ...speciesByRegion,
+  ...oceanSpeciesByRegion
+};
+
 function a(name, scientific, status, population, type, range, threat, source) {
   const template = animalTemplates[type] || animalTemplates.mammal;
   return {
@@ -422,36 +900,57 @@ function slug(value) {
   return value.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
 }
 
-const regions = continents.flatMap((continent) =>
+const continentRegions = continents.flatMap((continent) =>
   directions.map((direction) => {
     const id = `${continent.name}-${direction}`;
     const offset = directionOffsets[direction];
     const antarcticLon = { North: -135, South: -45, East: 45, West: 135 }[direction];
     return {
       id,
-      continent: continent.name,
+      place: continent.name,
+      placeType: "continent",
       direction,
       label: `${continent.name} / ${direction}`,
       lat: continent.name === "Antarctica" ? -67 - directions.indexOf(direction) * 4 : continent.lat + offset.lat,
       lon: continent.name === "Antarctica" ? antarcticLon : continent.lon + offset.lon,
-      animals: speciesByRegion[id] || []
+      animals: combinedSpeciesByRegion[id] || []
     };
   })
 );
+
+const oceanRegions = oceans.flatMap((ocean) =>
+  directions.map((direction) => {
+    const id = `${ocean.name}-${direction}`;
+    const coordinates = oceanRegionCoordinates[ocean.name][direction];
+    return {
+      id,
+      place: ocean.name,
+      placeType: "ocean",
+      direction,
+      label: `${ocean.name} / ${direction}`,
+      lat: coordinates.lat,
+      lon: coordinates.lon,
+      animals: combinedSpeciesByRegion[id] || []
+    };
+  })
+);
+
+const regions = [...continentRegions, ...oceanRegions];
 
 const allAnimals = regions.flatMap((region) =>
   region.animals.map((animal) => ({
     ...animal,
     regionId: region.id,
     regionLabel: region.label,
-    continent: region.continent,
+    place: region.place,
+    continent: region.place,
     direction: region.direction
   }))
 );
 
 const state = {
   activeRegionId: "Africa-North",
-  activeAnimalId: speciesByRegion["Africa-North"][0].id,
+  activeAnimalId: combinedSpeciesByRegion["Africa-North"][0].id,
   imageCache: new Map(),
   videoCache: new Map(),
   language: "en",
@@ -460,6 +959,23 @@ const state = {
 
 function t(key) {
   return languageCopy[state.language]?.[key] || languageCopy.en[key] || key;
+}
+
+function translatedDirection(direction) {
+  return languageCopy[state.language]?.directions?.[direction] || languageCopy.en.directions[direction] || direction;
+}
+
+function translatedPlace(place) {
+  return languageCopy[state.language]?.continents?.[place] || languageCopy[state.language]?.oceans?.[place] || languageCopy.en.continents[place] || languageCopy.en.oceans?.[place] || place;
+}
+
+function translatedRegionLabel(region) {
+  return `${translatedPlace(region.place)} / ${translatedDirection(region.direction)}`;
+}
+
+function searchResultTitle(count) {
+  if (count === 1) return t("searchResultsOne");
+  return t("searchResultsMany").replace("{count}", count);
 }
 
 const fallbackSvg = (name) =>
@@ -573,6 +1089,36 @@ function latLonToVector3(lat, lon, radius = 2.05) {
   );
 }
 
+function createPinMarkerTexture() {
+  const canvas = document.createElement("canvas");
+  canvas.width = 96;
+  canvas.height = 128;
+  const ctx = canvas.getContext("2d");
+
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.fillStyle = "#ffffff";
+  ctx.beginPath();
+  ctx.moveTo(48, 123);
+  ctx.bezierCurveTo(43, 95, 19, 82, 19, 49);
+  ctx.bezierCurveTo(19, 25, 31, 10, 48, 10);
+  ctx.bezierCurveTo(65, 10, 77, 25, 77, 49);
+  ctx.bezierCurveTo(77, 82, 53, 95, 48, 123);
+  ctx.closePath();
+  ctx.fill();
+
+  ctx.globalCompositeOperation = "destination-out";
+  ctx.beginPath();
+  ctx.arc(48, 48, 17, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.globalCompositeOperation = "source-over";
+
+  const texture = new THREE.CanvasTexture(canvas);
+  texture.needsUpdate = true;
+  texture.minFilter = THREE.LinearFilter;
+  texture.magFilter = THREE.LinearFilter;
+  return texture;
+}
+
 function initGlobe() {
   const container = document.querySelector("#globeCanvas");
   if (!container) return;
@@ -640,25 +1186,35 @@ function initGlobe() {
   scene.add(atmosphere);
 
   const markerGroup = new THREE.Group();
+  const pinTexture = createPinMarkerTexture();
   regions.forEach((region) => {
-    const marker = new THREE.Mesh(
-      new THREE.SphereGeometry(0.055, 20, 20),
-      new THREE.MeshBasicMaterial({ color: region.id === state.activeRegionId ? 0xffbd68 : 0xf7f1e6 })
+    const marker = new THREE.Sprite(
+      new THREE.SpriteMaterial({
+        map: pinTexture,
+        color: region.id === state.activeRegionId ? 0xffbd68 : 0xf7f1e6,
+        transparent: true,
+        depthTest: true,
+        depthWrite: false
+      })
     );
     marker.position.copy(latLonToVector3(region.lat, region.lon));
+    marker.scale.set(0.2, 0.28, 1);
     marker.userData.regionId = region.id;
     markerGroup.add(marker);
     state.markers.push(marker);
 
-    const halo = new THREE.Mesh(
-      new THREE.SphereGeometry(0.105, 20, 20),
-      new THREE.MeshBasicMaterial({
+    const halo = new THREE.Sprite(
+      new THREE.SpriteMaterial({
+        map: pinTexture,
         color: 0x62c9d8,
         transparent: true,
-        opacity: 0.18
+        opacity: 0.16,
+        depthTest: true,
+        depthWrite: false
       })
     );
     halo.position.copy(marker.position);
+    halo.scale.set(0.34, 0.48, 1);
     halo.userData.regionId = region.id;
     markerGroup.add(halo);
   });
@@ -727,8 +1283,8 @@ function renderRegionGrid() {
     .map(
       (region) => `
         <button class="region-button ${region.id === state.activeRegionId ? "is-active" : ""}" type="button" data-region-id="${region.id}">
-          <span>${region.direction}</span>
-          <strong>${region.continent}</strong>
+          <span>${translatedDirection(region.direction)}</span>
+          <strong>${translatedPlace(region.place)}</strong>
         </button>
       `
     )
@@ -747,9 +1303,9 @@ function setActiveRegion(regionId) {
   state.activeRegionId = region.id;
   state.activeAnimalId = region.animals[0]?.id || state.activeAnimalId;
 
-  document.querySelector("#activeRegionLabel").textContent = region.label;
+  document.querySelector("#activeRegionLabel").textContent = translatedRegionLabel(region);
   document.querySelector("#activeRegionCount").textContent = `${region.animals.length} ${t("animalsLoaded")}`;
-  document.querySelector("#panelKicker").textContent = region.label;
+  document.querySelector("#panelKicker").textContent = translatedRegionLabel(region);
   document.querySelector("#panelTitle").textContent = t("panelTitle");
 
   state.markers.forEach((marker) => {
@@ -757,7 +1313,7 @@ function setActiveRegion(regionId) {
   });
 
   renderRegionGrid();
-  renderAnimalCards(region.animals.map((animal) => ({ ...animal, regionLabel: region.label, regionId: region.id })));
+  renderAnimalCards(region.animals.map((animal) => ({ ...animal, regionLabel: translatedRegionLabel(region), regionId: region.id })));
 }
 
 function renderAnimalCards(records) {
@@ -1089,8 +1645,8 @@ function setupSearch() {
         .includes(query)
     );
 
-    document.querySelector("#panelKicker").textContent = t("searchButton");
-    document.querySelector("#panelTitle").textContent = results.length === 1 ? "1 animal found" : `${results.length} animals found`;
+    document.querySelector("#panelKicker").textContent = t("searchResults");
+    document.querySelector("#panelTitle").textContent = searchResultTitle(results.length);
     if (results[0]) state.activeAnimalId = results[0].id;
     renderAnimalCards(results);
   };
@@ -1132,12 +1688,22 @@ function applyLanguage() {
 
   const input = document.querySelector("#speciesSearch");
   if (input) input.placeholder = t("searchPlaceholder");
+  const hasSearchQuery = Boolean(input?.value.trim());
 
   const activeRegion = regions.find((region) => region.id === state.activeRegionId);
   if (activeRegion) {
+    document.querySelector("#activeRegionLabel").textContent = translatedRegionLabel(activeRegion);
     document.querySelector("#activeRegionCount").textContent = `${activeRegion.animals.length} ${t("animalsLoaded")}`;
-    document.querySelector("#panelTitle").textContent = t("panelTitle");
+    if (hasSearchQuery) {
+      document.querySelector("#panelKicker").textContent = t("searchResults");
+      document.querySelector("#panelTitle").textContent = searchResultTitle(document.querySelectorAll(".animal-card").length);
+    } else {
+      document.querySelector("#panelKicker").textContent = translatedRegionLabel(activeRegion);
+      document.querySelector("#panelTitle").textContent = t("panelTitle");
+    }
   }
+
+  renderRegionGrid();
 
   const activeAnimal = findAnimal(state.activeAnimalId);
   if (activeAnimal) renderDetail(activeAnimal);
