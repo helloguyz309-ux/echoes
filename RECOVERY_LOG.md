@@ -57,3 +57,20 @@ Likely recoverable temp PNG assets:
 
 - Created this recovery branch.
 - Added this recovery log and commit policy note.
+- Restored habitat PNG assets into `assets/`.
+
+## Asset Recovery Map
+
+Exact matches by byte size from the deletion log:
+
+- `assets/forest-realistic-original.png` from `C:/Users/ADMINI~1/AppData/Local/Temp/codex-clipboard-6020f5b0-8e8a-44d1-a684-67f9a7d2a94d.png` (`294750` bytes).
+- `assets/water-surface.png` from `C:/Users/ADMINI~1/AppData/Local/Temp/codex-clipboard-2a4076cb-926f-4bac-94c9-815c294b1c68.png` (`716060` bytes).
+- `assets/cloud-realistic-original.png` from `C:/Users/ADMINI~1/AppData/Local/Temp/codex-clipboard-7f5cb149-6658-43ed-be15-0a15ed52a689.png` (`200183` bytes).
+
+Best-match recoveries from the same temp batches:
+
+- `assets/forest-realistic.png` from `C:/Users/ADMINI~1/AppData/Local/Temp/codex-clipboard-d63e468d-20b1-447e-b0ce-db5570226ae4.png`.
+- `assets/grass-realistic.png` from `C:/Users/ADMINI~1/AppData/Local/Temp/codex-clipboard-49960175-3b58-48d7-9e42-3f3f5166475c.png`.
+- `assets/cloud-realistic.png` from `C:/Users/ADMINI~1/AppData/Local/Temp/codex-clipboard-e286f621-c3bd-434f-8482-b19f346c393c.png`.
+
+Note: the exact deleted byte sizes for `forest-realistic.png`, `grass-realistic.png`, and `cloud-realistic.png` were not found under `C:/Users/Administrator` during the read-only search, so those three should be visually verified.
