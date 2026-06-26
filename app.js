@@ -63,6 +63,10 @@ const languageCopy = {
     navArchive: "Archive",
     navSources: "Sources",
     language: "Language",
+    theme: "Theme",
+    darkMode: "Dark",
+    lightMode: "Light",
+    regionSelect: "Region",
     heroKicker: "Rotatable extinction atlas",
     heroTitle: "Choose a part of Earth. Hear what is almost gone.",
     heroBody: "Every continent and ocean is split into north, south, east, and west. Select a glowing region to open five threatened animals from that area.",
@@ -512,6 +516,13 @@ const earthTextureUrls = {
   clouds: "https://cdn.jsdelivr.net/gh/mrdoob/three.js@r128/examples/textures/planets/earth_clouds_1024.png"
 };
 
+const habitatAssets = {
+  forest: "assets/forest-realistic.png",
+  grass: "assets/grass-realistic.png",
+  water: "assets/water-surface.png",
+  cloud: "assets/cloud-realistic.png"
+};
+
 const curatedImages = {
   "vaquita-phocoena-sinus": [
     "https://assets.worldwildlife.org/www-prd/images/wwfcmsprodimagesVaqui.2e16d0ba.fill-375x500.format-webp.webp",
@@ -954,6 +965,7 @@ const state = {
   imageCache: new Map(),
   videoCache: new Map(),
   language: "en",
+  theme: "dark",
   markers: []
 };
 
@@ -976,6 +988,41 @@ function translatedRegionLabel(region) {
 function searchResultTitle(count) {
   if (count === 1) return t("searchResultsOne");
   return t("searchResultsMany").replace("{count}", count);
+}
+
+function updateTranslatedOptions() {
+  const themeSelect = document.querySelector("#themePreference");
+  if (themeSelect) {
+    themeSelect.querySelector('option[value="dark"]').textContent = t("darkMode");
+    themeSelect.querySelector('option[value="light"]').textContent = t("lightMode");
+  }
+}
+
+function renderRegionDropdown() {
+  const select = document.querySelector("#regionSelect");
+  if (!select) return;
+
+  const options = regions.map((region) => {
+    const option = document.createElement("option");
+    option.value = region.id;
+    option.textContent = translatedRegionLabel(region);
+    return option;
+  });
+  select.replaceChildren(...options);
+  select.value = state.activeRegionId;
+}
+
+function renderAnimalSuggestions() {
+  const list = document.querySelector("#animalSuggestions");
+  if (!list) return;
+
+  const options = allAnimals.map((animal) => {
+    const option = document.createElement("option");
+    option.value = animal.name;
+    option.label = `${animal.scientific} - ${translatedPlace(animal.place)} / ${translatedDirection(animal.direction)}`;
+    return option;
+  });
+  list.replaceChildren(...options);
 }
 
 const fallbackSvg = (name) =>
@@ -1212,6 +1259,8 @@ function renderRegionGrid() {
       document.querySelector("#archive")?.scrollIntoView({ behavior: "smooth", block: "start" });
     });
   });
+
+  renderRegionDropdown();
 }
 
 function setActiveRegion(regionId) {
@@ -1355,42 +1404,33 @@ function animateGallery(panel) {
 async function loadAnimalImages(animal) {
   if (state.imageCache.has(animal.id)) return state.imageCache.get(animal.id);
 
-  if (curatedImages[animal.id]) {
-    state.imageCache.set(animal.id, curatedImages[animal.id]);
-    return curatedImages[animal.id];
-  }
-
-  const queries = [animal.scientific, animal.name, `${animal.name} wildlife`];
-  const images = [];
-
-  for (const query of queries) {
-    if (images.length >= 5) break;
-    const url = `https://commons.wikimedia.org/w/api.php?action=query&generator=search&gsrsearch=${encodeURIComponent(query)}&gsrnamespace=6&gsrlimit=30&prop=imageinfo&iiprop=url|mime&iiurlwidth=1100&format=json&origin=*`;
-    try {
-      const response = await fetch(url);
-      const data = await response.json();
-      const pages = Object.values(data.query?.pages || {});
-      pages
-        .filter((page) => isAnimalPhotoPage(page, animal))
-        .map((page) => page.imageinfo?.[0]?.thumburl || page.imageinfo?.[0]?.url)
-        .filter(Boolean)
-        .forEach((imageUrl) => {
-          if (images.length < 5 && !images.includes(imageUrl) && isAnimalPhotoUrl(imageUrl)) {
-            images.push(imageUrl);
-          }
-        });
-    } catch {
-      break;
-    }
-  }
-
-  const foundPhotos = [...images];
-  while (images.length < 5) {
-    images.push(foundPhotos.length ? foundPhotos[images.length % foundPhotos.length] : fallbackSvg(animal.name));
-  }
-
+  const images = localHabitatImages(animal);
   state.imageCache.set(animal.id, images);
   return images;
+}
+
+function localHabitatImages(animal) {
+  const primary = habitatAssets[habitatAssetKey(animal)] || habitatAssets.forest;
+  const gallery = [primary, habitatAssets.forest, habitatAssets.grass, habitatAssets.water, habitatAssets.cloud].filter(Boolean);
+  return gallery.slice(0, 5);
+}
+
+function habitatAssetKey(animal) {
+  const text = [animal.type, animal.habitat, animal.range, animal.threat, animal.name].join(" ").toLowerCase();
+
+  if (/(ocean|sea|marine|reef|river|wetland|coast|water|whale|seal|turtle|fish|vaquita|penguin)/.test(text)) {
+    return "water";
+  }
+
+  if (/(bird|albatross|vulture|eagle|falcon|crane|parrot|macaw|petrel|condor)/.test(text)) {
+    return "cloud";
+  }
+
+  if (/(grass|savanna|steppe|prairie|shrubland|desert|karoo|sahel)/.test(text)) {
+    return "grass";
+  }
+
+  return "forest";
 }
 
 function isAnimalPhotoPage(page, animal) {
@@ -1575,6 +1615,41 @@ function setupSearch() {
   input.addEventListener("input", run);
 }
 
+function setupRegionDropdown() {
+  const select = document.querySelector("#regionSelect");
+  const input = document.querySelector("#speciesSearch");
+  if (!select) return;
+
+  renderRegionDropdown();
+  select.addEventListener("change", () => {
+    if (input) input.value = "";
+    setActiveRegion(select.value);
+    document.querySelector("#archive")?.scrollIntoView({ behavior: "smooth", block: "start" });
+  });
+}
+
+function setupThemePreference() {
+  const select = document.querySelector("#themePreference");
+  if (!select) return;
+
+  const saved = localStorage.getItem("echoes-theme") || "dark";
+  state.theme = saved === "light" ? "light" : "dark";
+  select.value = state.theme;
+  applyTheme();
+  updateTranslatedOptions();
+
+  select.addEventListener("change", () => {
+    state.theme = select.value === "light" ? "light" : "dark";
+    localStorage.setItem("echoes-theme", state.theme);
+    applyTheme();
+  });
+}
+
+function applyTheme() {
+  document.documentElement.dataset.theme = state.theme;
+  document.documentElement.style.colorScheme = state.theme;
+}
+
 function setupLanguagePreference() {
   const select = document.querySelector("#languagePreference");
   const input = document.querySelector("#speciesSearch");
@@ -1620,6 +1695,9 @@ function applyLanguage() {
   }
 
   renderRegionGrid();
+  renderRegionDropdown();
+  renderAnimalSuggestions();
+  updateTranslatedOptions();
 
   const activeAnimal = findAnimal(state.activeAnimalId);
   if (activeAnimal) renderDetail(activeAnimal);
@@ -1639,5 +1717,8 @@ setActiveRegion(state.activeRegionId);
 setupSearch();
 setupModal();
 setupLanguagePreference();
+setupRegionDropdown();
+setupThemePreference();
+renderAnimalSuggestions();
 setupLogoFallback();
 initGlobe();

@@ -58,6 +58,18 @@ Likely recoverable temp PNG assets:
 - Created this recovery branch.
 - Added this recovery log and commit policy note.
 - Restored habitat PNG assets into `assets/`.
+- Restored the June 26 UI controls and behavior in `index.html`, `app.js`, and `styles.css`:
+  - language and theme controls share the topbar preference area,
+  - region dropdown is back and stays synced with the region grid,
+  - animal search datalist suggestions are back,
+  - dark/light theme preference is saved in `localStorage`,
+  - animal card/detail images use the recovered local habitat PNGs for fast offline loading.
+- Preserved the realistic Three.js globe texture path and existing pin marker code from `54b06af`.
+- Verification for this step:
+  - `git diff --check` passed, with only normal CRLF warnings,
+  - `app.js` parsed successfully through Node `vm.Script`,
+  - static checks confirmed the recovered controls exist and all four referenced PNG assets are present.
+- Browser caveat: Playwright is installed but its Chromium executable is missing at `C:/Users/Administrator/AppData/Local/ms-playwright/...`; no browser download was performed during recovery.
 
 ## Asset Recovery Map
 

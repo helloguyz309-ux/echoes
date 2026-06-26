@@ -28,21 +28,30 @@
           <a href="#sources" data-i18n="navSources">Sources</a>
         </nav>
 
-        <label class="language-control" for="languagePreference">
-          <span data-i18n="language">Language</span>
-          <select id="languagePreference" aria-label="Language preference">
-            <option value="en">English</option>
-            <option value="es">Espanol</option>
-            <option value="fr">Francais</option>
-            <option value="hi">Hindi</option>
-            <option value="ar">Arabic</option>
-            <option value="zh">Chinese</option>
-            <option value="ja">Japanese</option>
-            <option value="pt">Portuguese</option>
-            <option value="sw">Swahili</option>
-            <option value="id">Indonesian</option>
-          </select>
-        </label>
+        <div class="preference-controls">
+          <label class="language-control" for="languagePreference">
+            <span data-i18n="language">Language</span>
+            <select id="languagePreference" aria-label="Language preference">
+              <option value="en">English</option>
+              <option value="es">Espanol</option>
+              <option value="fr">Francais</option>
+              <option value="hi">Hindi</option>
+              <option value="ar">Arabic</option>
+              <option value="zh">Chinese</option>
+              <option value="ja">Japanese</option>
+              <option value="pt">Portuguese</option>
+              <option value="sw">Swahili</option>
+              <option value="id">Indonesian</option>
+            </select>
+          </label>
+          <label class="theme-control" for="themePreference">
+            <span data-i18n="theme">Theme</span>
+            <select id="themePreference" aria-label="Theme preference">
+              <option value="dark" data-i18n-option="darkMode">Dark</option>
+              <option value="light" data-i18n-option="lightMode">Light</option>
+            </select>
+          </label>
+        </div>
       </header>
 
       <main id="home">
@@ -56,7 +65,8 @@
             <form class="search-panel" role="search" aria-label="Search animals">
               <label for="speciesSearch" data-i18n="searchLabel">Search 240 animal records</label>
               <div class="search-row">
-                <input id="speciesSearch" type="search" autocomplete="off" placeholder="Search vaquita, rhino, penguin, forest, bycatch...">
+                <input id="speciesSearch" type="search" list="animalSuggestions" autocomplete="off" placeholder="Search vaquita, rhino, penguin, forest, bycatch...">
+                <datalist id="animalSuggestions"></datalist>
                 <button type="submit" data-i18n="searchButton">Search</button>
               </div>
             </form>
@@ -73,8 +83,14 @@
 
         <section class="region-console" aria-label="Region selector">
           <div class="region-heading">
-            <p class="kicker" data-i18n="zonesKicker">48 living zones</p>
-            <h2 data-i18n="zonesTitle">Continents and oceans divided by direction</h2>
+            <div>
+              <p class="kicker" data-i18n="zonesKicker">48 living zones</p>
+              <h2 data-i18n="zonesTitle">Continents and oceans divided by direction</h2>
+            </div>
+            <label class="region-select-control" for="regionSelect">
+              <span data-i18n="regionSelect">Region</span>
+              <select id="regionSelect" aria-label="Region selector"></select>
+            </label>
           </div>
           <div id="regionGrid" class="region-grid"></div>
         </section>
