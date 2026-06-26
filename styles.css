@@ -449,6 +449,7 @@ html[data-theme="light"] .detail-actions button:first-child {
 
 .region-select-control {
   width: min(320px, 100%);
+  position: relative;
   display: grid;
   gap: 5px;
   padding: 9px 10px;
@@ -465,14 +466,68 @@ html[data-theme="light"] .detail-actions button:first-child {
   text-transform: uppercase;
 }
 
-.region-select-control select {
+.region-dropdown-button {
   width: 100%;
+  min-height: 38px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 10px;
   border: 0;
+  border-radius: 6px;
   outline: 0;
+  padding: 0;
   background: transparent;
   color: var(--ink);
+  cursor: pointer;
+  text-align: left;
+}
+
+.region-dropdown-button strong {
+  min-width: 0;
+  overflow: hidden;
   font-size: 0.94rem;
   font-weight: 800;
+  line-height: 1.25;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.region-dropdown-arrow {
+  width: 10px;
+  height: 10px;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  transform: translateY(-2px) rotate(45deg);
+  transition: transform 180ms ease;
+}
+
+.region-dropdown-button[aria-expanded="true"] .region-dropdown-arrow {
+  transform: translateY(2px) rotate(225deg);
+}
+
+.region-dropdown-panel {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  z-index: 40;
+  width: min(860px, calc(100vw - 32px));
+  max-height: min(70vh, 620px);
+  overflow: auto;
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--panel-strong);
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(18px);
+}
+
+.region-dropdown-panel[hidden] {
+  display: none;
+}
+
+.region-dropdown-panel .region-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
 }
 
 .region-grid {
@@ -1001,6 +1056,7 @@ html[data-theme="light"] .empty-state {
 
   .search-row,
   .region-grid,
+  .region-dropdown-panel .region-grid,
   .animal-grid,
   .detail-facts {
     grid-template-columns: 1fr;

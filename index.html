@@ -87,12 +87,17 @@
               <p class="kicker" data-i18n="zonesKicker">48 living zones</p>
               <h2 data-i18n="zonesTitle">Continents and oceans divided by direction</h2>
             </div>
-            <label class="region-select-control" for="regionSelect">
+            <div class="region-select-control region-grid-dropdown">
               <span data-i18n="regionSelect">Region</span>
-              <select id="regionSelect" aria-label="Region selector"></select>
-            </label>
+              <button id="regionDropdownButton" class="region-dropdown-button" type="button" aria-haspopup="true" aria-expanded="false" aria-controls="regionDropdownPanel">
+                <strong id="regionDropdownLabel">Africa / North</strong>
+                <span class="region-dropdown-arrow" aria-hidden="true"></span>
+              </button>
+              <div id="regionDropdownPanel" class="region-dropdown-panel" hidden>
+                <div id="regionGrid" class="region-grid"></div>
+              </div>
+            </div>
           </div>
-          <div id="regionGrid" class="region-grid"></div>
         </section>
 
         <section id="archive" class="animal-console" aria-live="polite">

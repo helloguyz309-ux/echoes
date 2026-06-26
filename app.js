@@ -1086,17 +1086,20 @@ function updateTranslatedOptions() {
 }
 
 function renderRegionDropdown() {
-  const select = document.querySelector("#regionSelect");
-  if (!select) return;
+  const label = document.querySelector("#regionDropdownLabel");
+  if (!label) return;
 
-  const options = regions.map((region) => {
-    const option = document.createElement("option");
-    option.value = region.id;
-    option.textContent = translatedRegionLabel(region);
-    return option;
-  });
-  select.replaceChildren(...options);
-  select.value = state.activeRegionId;
+  const activeRegion = regions.find((region) => region.id === state.activeRegionId) || regions[0];
+  label.textContent = translatedRegionLabel(activeRegion);
+}
+
+function closeRegionDropdown() {
+  const button = document.querySelector("#regionDropdownButton");
+  const panel = document.querySelector("#regionDropdownPanel");
+  if (!button || !panel) return;
+
+  button.setAttribute("aria-expanded", "false");
+  panel.hidden = true;
 }
 
 function renderAnimalSuggestions() {
@@ -1349,7 +1352,10 @@ function renderRegionGrid() {
 
   grid.querySelectorAll("[data-region-id]").forEach((button) => {
     button.addEventListener("click", () => {
+      const input = document.querySelector("#speciesSearch");
+      if (input) input.value = "";
       setActiveRegion(button.dataset.regionId);
+      closeRegionDropdown();
       document.querySelector("#archive")?.scrollIntoView({ behavior: "smooth", block: "start" });
     });
   });
@@ -1744,15 +1750,28 @@ function setupSearch() {
 }
 
 function setupRegionDropdown() {
-  const select = document.querySelector("#regionSelect");
-  const input = document.querySelector("#speciesSearch");
-  if (!select) return;
+  const button = document.querySelector("#regionDropdownButton");
+  const panel = document.querySelector("#regionDropdownPanel");
+  if (!button || !panel) return;
 
   renderRegionDropdown();
-  select.addEventListener("change", () => {
-    if (input) input.value = "";
-    setActiveRegion(select.value);
-    document.querySelector("#archive")?.scrollIntoView({ behavior: "smooth", block: "start" });
+  button.addEventListener("click", () => {
+    const isOpen = button.getAttribute("aria-expanded") === "true";
+    button.setAttribute("aria-expanded", String(!isOpen));
+    panel.hidden = isOpen;
+  });
+
+  document.addEventListener("click", (event) => {
+    if (!panel.hidden && !event.target.closest(".region-grid-dropdown")) {
+      closeRegionDropdown();
+    }
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") {
+      closeRegionDropdown();
+      button.focus();
+    }
   });
 }
 
