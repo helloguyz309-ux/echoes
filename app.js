@@ -1498,7 +1498,41 @@ function animateGallery(panel) {
 async function loadAnimalImages(animal) {
   if (state.imageCache.has(animal.id)) return state.imageCache.get(animal.id);
 
-  const images = localHabitatImages(animal);
+  if (curatedImages[animal.id]) {
+    state.imageCache.set(animal.id, curatedImages[animal.id]);
+    return curatedImages[animal.id];
+  }
+
+  const queries = [animal.scientific, animal.name, `${animal.name} wildlife`];
+  const images = [];
+
+  for (const query of queries) {
+    if (images.length >= 5) break;
+    const url = `https://commons.wikimedia.org/w/api.php?action=query&generator=search&gsrsearch=${encodeURIComponent(query)}&gsrnamespace=6&gsrlimit=30&prop=imageinfo&iiprop=url|mime&iiurlwidth=1100&format=json&origin=*`;
+    try {
+      const response = await fetch(url);
+      const data = await response.json();
+      const pages = Object.values(data.query?.pages || {});
+      pages
+        .filter((page) => isAnimalPhotoPage(page, animal))
+        .map((page) => page.imageinfo?.[0]?.thumburl || page.imageinfo?.[0]?.url)
+        .filter(Boolean)
+        .forEach((imageUrl) => {
+          if (images.length < 5 && !images.includes(imageUrl) && isAnimalPhotoUrl(imageUrl)) {
+            images.push(imageUrl);
+          }
+        });
+    } catch {
+      break;
+    }
+  }
+
+  const foundPhotos = [...images];
+  const fallbacks = localHabitatImages(animal);
+  while (images.length < 5) {
+    images.push(foundPhotos.length ? foundPhotos[images.length % foundPhotos.length] : fallbacks[images.length % fallbacks.length] || fallbackSvg(animal.name));
+  }
+
   state.imageCache.set(animal.id, images);
   return images;
 }

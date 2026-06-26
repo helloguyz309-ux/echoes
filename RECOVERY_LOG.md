@@ -75,6 +75,7 @@ Likely recoverable temp PNG assets:
   - `sourceLinkCopy` was restored for source-link labels,
   - empty search/video loading/motion preview strings now use translation keys instead of hard-coded English.
 - Deliberately not reapplied yet: the very large June 25 animal-name/type translation patches around lines `672`, `801`, `815`, `821`, `858`, `891`, `904`, and `910` in `rollout-2026-06-25T09-52-08-019efd03-8cb9-7713-bc39-52b90993b8ec.jsonl`. They are recoverable, but they are broad and mojibake-heavy, so they should be restored in a dedicated pass with browser visual checks.
+- Follow-up fix: restored real animal-photo loading as the primary path in `loadAnimalImages()`. The recovered forest/grass/water/cloud assets remain available only as fallback images when curated/Wikimedia animal photos cannot be found.
 
 ## Asset Recovery Map
 
