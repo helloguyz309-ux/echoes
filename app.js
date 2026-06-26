@@ -89,6 +89,10 @@ const languageCopy = {
     searchResults: "Search results",
     searchResultsOne: "1 animal found",
     searchResultsMany: "{count} animals found",
+    noMatch: "No matching animal records found.",
+    loadingVideo: "Loading video...",
+    motionPreview: "moving image preview",
+    motionFrame: "motion frame",
     directions: { North: "North", South: "South", East: "East", West: "West" },
     continents: {
       Africa: "Africa",
@@ -489,6 +493,89 @@ const animalTemplates = {
   insect: {
     body: "Small invertebrate with a segmented body and specialized life cycle linked to host plants or islands.",
     habitat: "Depends on very specific plants, soil, forest patches, or island refuges."
+  }
+};
+
+const sourceLinkCopy = {
+  en: {
+    wwf: "WWF species profiles",
+    iucn: "IUCN Red List",
+    noaa: "NOAA endangered species",
+    usfws: "USFWS endangered species",
+    commons: "Wikimedia Commons media",
+    design: "Design inspiration"
+  },
+  es: {
+    wwf: "Perfiles de especies de WWF",
+    iucn: "Lista Roja de IUCN",
+    noaa: "Especies amenazadas de NOAA",
+    usfws: "Especies amenazadas de USFWS",
+    commons: "Medios de Wikimedia Commons",
+    design: "Inspiracion de diseno"
+  },
+  fr: {
+    wwf: "Profils d'especes WWF",
+    iucn: "Liste rouge de l'IUCN",
+    noaa: "Especes menacees NOAA",
+    usfws: "Especes menacees USFWS",
+    commons: "Medias Wikimedia Commons",
+    design: "Inspiration de design"
+  },
+  hi: {
+    wwf: "WWF species profiles",
+    iucn: "IUCN Red List",
+    noaa: "NOAA endangered species",
+    usfws: "USFWS endangered species",
+    commons: "Wikimedia Commons media",
+    design: "Design inspiration"
+  },
+  ar: {
+    wwf: "WWF species profiles",
+    iucn: "IUCN Red List",
+    noaa: "NOAA endangered species",
+    usfws: "USFWS endangered species",
+    commons: "Wikimedia Commons media",
+    design: "Design inspiration"
+  },
+  zh: {
+    wwf: "WWF species profiles",
+    iucn: "IUCN Red List",
+    noaa: "NOAA endangered species",
+    usfws: "USFWS endangered species",
+    commons: "Wikimedia Commons media",
+    design: "Design inspiration"
+  },
+  ja: {
+    wwf: "WWF species profiles",
+    iucn: "IUCN Red List",
+    noaa: "NOAA endangered species",
+    usfws: "USFWS endangered species",
+    commons: "Wikimedia Commons media",
+    design: "Design inspiration"
+  },
+  pt: {
+    wwf: "Perfis de especies do WWF",
+    iucn: "Lista Vermelha da IUCN",
+    noaa: "Especies ameacadas da NOAA",
+    usfws: "Especies ameacadas da USFWS",
+    commons: "Midia do Wikimedia Commons",
+    design: "Inspiracao de design"
+  },
+  sw: {
+    wwf: "Wasifu wa spishi wa WWF",
+    iucn: "Orodha Nyekundu ya IUCN",
+    noaa: "Spishi zilizo hatarini za NOAA",
+    usfws: "Spishi zilizo hatarini za USFWS",
+    commons: "Vyombo vya Wikimedia Commons",
+    design: "Msukumo wa usanifu"
+  },
+  id: {
+    wwf: "Profil spesies WWF",
+    iucn: "Daftar Merah IUCN",
+    noaa: "Spesies terancam NOAA",
+    usfws: "Spesies terancam USFWS",
+    commons: "Media Wikimedia Commons",
+    design: "Inspirasi desain"
   }
 };
 
@@ -1025,6 +1112,13 @@ function renderAnimalSuggestions() {
   list.replaceChildren(...options);
 }
 
+function translateSourceLinks() {
+  document.querySelectorAll("[data-source-key]").forEach((link) => {
+    const key = link.dataset.sourceKey;
+    link.textContent = sourceLinkCopy[state.language]?.[key] || sourceLinkCopy.en[key] || link.textContent;
+  });
+}
+
 const fallbackSvg = (name) =>
   `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(`
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 620">
@@ -1286,7 +1380,7 @@ function renderAnimalCards(records) {
   if (!grid) return;
 
   if (!records.length) {
-    grid.innerHTML = '<div class="empty-state">No matching animal records found.</div>';
+    grid.innerHTML = `<div class="empty-state">${t("noMatch")}</div>`;
     return;
   }
 
@@ -1502,7 +1596,7 @@ async function openVideo(animal) {
   if (!modal || !title || !wrap) return;
 
   title.textContent = `${animal.name} ${t("videoTitle")}`;
-  wrap.innerHTML = '<div class="empty-state">Loading video...</div>';
+  wrap.innerHTML = `<div class="empty-state">${t("loadingVideo")}</div>`;
   modal.hidden = false;
 
   const video = await loadAnimalVideo(animal);
@@ -1511,9 +1605,9 @@ async function openVideo(animal) {
   } else {
     const images = await loadAnimalImages(animal);
     wrap.innerHTML = `
-      <div class="motion-video" aria-label="${animal.name} moving image preview">
+      <div class="motion-video" aria-label="${animal.name} ${t("motionPreview")}">
         ${images
-          .map((image, index) => `<img src="${image}" alt="${animal.name} motion frame ${index + 1}" style="--frame-index:${index}">`)
+          .map((image, index) => `<img src="${image}" alt="${animal.name} ${t("motionFrame")} ${index + 1}" style="--frame-index:${index}">`)
           .join("")}
         <div class="motion-caption">
           <span>${animal.name}</span>
@@ -1698,6 +1792,7 @@ function applyLanguage() {
   renderRegionDropdown();
   renderAnimalSuggestions();
   updateTranslatedOptions();
+  translateSourceLinks();
 
   const activeAnimal = findAnimal(state.activeAnimalId);
   if (activeAnimal) renderDetail(activeAnimal);

@@ -70,6 +70,11 @@ Likely recoverable temp PNG assets:
   - `app.js` parsed successfully through Node `vm.Script`,
   - static checks confirmed the recovered controls exist and all four referenced PNG assets are present.
 - Browser caveat: Playwright is installed but its Chromium executable is missing at `C:/Users/Administrator/AppData/Local/ms-playwright/...`; no browser download was performed during recovery.
+- Restored a smaller June 25 localization layer:
+  - source links have `data-source-key` attributes again,
+  - `sourceLinkCopy` was restored for source-link labels,
+  - empty search/video loading/motion preview strings now use translation keys instead of hard-coded English.
+- Deliberately not reapplied yet: the very large June 25 animal-name/type translation patches around lines `672`, `801`, `815`, `821`, `858`, `891`, `904`, and `910` in `rollout-2026-06-25T09-52-08-019efd03-8cb9-7713-bc39-52b90993b8ec.jsonl`. They are recoverable, but they are broad and mojibake-heavy, so they should be restored in a dedicated pass with browser visual checks.
 
 ## Asset Recovery Map
 
