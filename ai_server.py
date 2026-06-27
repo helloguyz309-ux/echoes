@@ -76,6 +76,6 @@ def ask_archive_endpoint():
 
 
 if __name__ == "__main__":
-    port = int(os.environ.get("AI_PORT", "5057"))
+    port = int(os.environ.get("AI_PORT") or os.environ.get("PORT") or "5057")
     print(f"Echoes archive keeper listening on http://127.0.0.1:{port}  (model: {MODEL})")
     app.run(host="127.0.0.1", port=port, debug=False)
