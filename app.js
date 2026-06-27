@@ -79,6 +79,13 @@ const languageCopy = {
     animalsLoaded: "animals loaded",
     openVideo: "Open video",
     animateImages: "Animate images",
+    askArchive: "Ask the Archive",
+    askArchiveLoading: "Listening to the archive...",
+    askArchiveError: "The archive is quiet right now.",
+    askArchiveHint: "Start the local keeper first: python ai_server.py",
+    archiveCardKicker: "A memory card",
+    archiveFactLabel: "One striking fact:",
+    archiveCardCredit: "Written for Echoes by gpt-5.4-nano",
     sourceSuffix: "source",
     population: "Population left",
     where: "Where",
@@ -1462,8 +1469,10 @@ async function renderDetail(animal) {
       <div class="detail-actions">
         <button type="button" data-open-video="${animal.id}">${t("openVideo")}</button>
         <button type="button" data-animate-images>${t("animateImages")}</button>
+        <button type="button" class="ask-archive-button" data-ask-archive>${t("askArchive")}</button>
         <a class="source-links-inline" href="${animal.sourceUrl}" target="_blank" rel="noreferrer">${animal.source} ${t("sourceSuffix")}</a>
       </div>
+      <div class="archive-card" data-archive-card hidden aria-live="polite"></div>
       <div class="detail-gallery" aria-label="Five image panel">
         ${[0, 1, 2, 3, 4]
           .map(
@@ -1484,11 +1493,62 @@ async function renderDetail(animal) {
 
   panel.querySelector("[data-open-video]")?.addEventListener("click", () => openVideo(animal));
   panel.querySelector("[data-animate-images]")?.addEventListener("click", () => animateGallery(panel));
+  panel.querySelector("[data-ask-archive]")?.addEventListener("click", (event) => {
+    askTheArchive(animal, event.currentTarget, panel.querySelector("[data-archive-card]"));
+  });
   panel.querySelectorAll(".detail-gallery button").forEach((button) => {
     button.addEventListener("click", () => {
       openImage(button.dataset.largeImage, `${animal.name} image`);
     });
   });
+}
+
+// --- Ask the Archive (AI feature, powered by gpt-5.4-nano via ai_server.py) ---
+const ARCHIVE_API_BASE = "http://127.0.0.1:5057";
+
+async function askTheArchive(animal, button, card) {
+  if (!card) return;
+
+  button.disabled = true;
+  const originalLabel = button.textContent;
+  button.textContent = t("askArchiveLoading");
+
+  card.hidden = false;
+  card.classList.remove("is-error");
+  card.innerHTML = `<p class="archive-card-status">${t("askArchiveLoading")}</p>`;
+
+  try {
+    const response = await fetch(`${ARCHIVE_API_BASE}/ask-archive`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        name: animal.name,
+        scientific: animal.scientific,
+        context: `${animal.status}. ${animal.population}. Range: ${animal.range}. Threat: ${animal.threat}`
+      })
+    });
+
+    const data = await response.json();
+    if (!response.ok) throw new Error(data.error || "The archive is silent.");
+
+    const factBlock = data.fact
+      ? `<p class="archive-card-fact"><span>${t("archiveFactLabel")}</span> ${data.fact}</p>`
+      : "";
+
+    card.innerHTML = `
+      <p class="archive-card-kicker">${t("archiveCardKicker")}</p>
+      <p class="archive-card-body">${data.card || ""}</p>
+      ${factBlock}
+      <p class="archive-card-credit">${t("archiveCardCredit")}</p>
+    `;
+  } catch (error) {
+    card.classList.add("is-error");
+    card.innerHTML = `<p class="archive-card-status">${t("askArchiveError")}</p>
+      <p class="archive-card-hint">${t("askArchiveHint")}</p>`;
+  } finally {
+    button.disabled = false;
+    button.textContent = originalLabel;
+  }
 }
 
 function animateGallery(panel) {
