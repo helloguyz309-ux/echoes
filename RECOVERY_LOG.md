@@ -93,3 +93,14 @@ Best-match recoveries from the same temp batches:
 - `assets/cloud-realistic.png` from `C:/Users/ADMINI~1/AppData/Local/Temp/codex-clipboard-e286f621-c3bd-434f-8482-b19f346c393c.png`.
 
 Note: the exact deleted byte sizes for `forest-realistic.png`, `grass-realistic.png`, and `cloud-realistic.png` were not found under `C:/Users/Administrator` during the read-only search, so those three should be visually verified.
+
+## Desktop Release Packaging
+
+Desktop packaging was added after the original `v4` tag without changing the recovered web app UI or data:
+
+- `electron-main.js` opens the existing `index.html` in a sandboxed Electron window.
+- `package.json` builds a Windows x64 NSIS installer, macOS x64 and arm64 DMGs, and a Linux x64 AppImage.
+- `.github/workflows/desktop-release.yml` builds each platform on its native GitHub runner and uploads the files to an existing release tag.
+- The workflow is manually dispatched with `release_tag=v4` for the current release.
+
+The packages are currently unsigned. Windows SmartScreen and macOS Gatekeeper may show an unknown-publisher warning until project-specific code-signing certificates are configured in GitHub Actions secrets. Do not add signing credentials to the repository.
