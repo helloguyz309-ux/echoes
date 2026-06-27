@@ -603,13 +603,6 @@ const earthTextureUrls = {
   clouds: "https://cdn.jsdelivr.net/gh/mrdoob/three.js@r128/examples/textures/planets/earth_clouds_1024.png"
 };
 
-const habitatAssets = {
-  forest: "assets/forest-realistic.png",
-  grass: "assets/grass-realistic.png",
-  water: "assets/water-surface.png",
-  cloud: "assets/cloud-realistic.png"
-};
-
 const curatedImages = {
   "vaquita-phocoena-sinus": [
     "https://assets.worldwildlife.org/www-prd/images/wwfcmsprodimagesVaqui.2e16d0ba.fill-375x500.format-webp.webp",
@@ -1429,7 +1422,7 @@ function renderAnimalCards(records) {
   records.forEach((animal) => {
     loadAnimalImages(animal).then((images) => {
       const image = document.querySelector(`[data-image-for="${animal.id}"]`);
-      if (image && images[0]) image.src = images[0];
+      if (image) setAnimalImage(image, images, animal.name);
     });
   });
 
@@ -1454,7 +1447,7 @@ async function renderDetail(animal) {
   const hero = images[0] || fallbackSvg(animal.name);
   panel.innerHTML = `
     <div class="detail-hero">
-      <img src="${hero}" alt="${animal.name}">
+      <img src="${hero}" alt="${animal.name}" data-animal-photo-index="0">
     </div>
     <div class="detail-copy">
       <p class="kicker">${animal.scientific}</p>
@@ -1476,7 +1469,7 @@ async function renderDetail(animal) {
           .map(
             (index) => `
               <button type="button" aria-label="Open ${animal.name} image ${index + 1}" data-large-image="${images[index] || fallbackSvg(animal.name)}">
-                <img src="${images[index] || fallbackSvg(animal.name)}" alt="${animal.name} image ${index + 1}">
+                <img src="${images[index] || fallbackSvg(animal.name)}" alt="${animal.name} image ${index + 1}" data-animal-photo-index="${index}">
               </button>
             `
           )
@@ -1484,6 +1477,10 @@ async function renderDetail(animal) {
       </div>
     </div>
   `;
+
+  panel.querySelectorAll("[data-animal-photo-index]").forEach((image) => {
+    setAnimalImage(image, images, animal.name, Number(image.dataset.animalPhotoIndex) || 0);
+  });
 
   panel.querySelector("[data-open-video]")?.addEventListener("click", () => openVideo(animal));
   panel.querySelector("[data-animate-images]")?.addEventListener("click", () => animateGallery(panel));
@@ -1499,6 +1496,26 @@ function animateGallery(panel) {
     button.classList.add("is-moving");
     setTimeout(() => button.classList.remove("is-moving"), 2200);
   });
+}
+
+function setAnimalImage(image, candidates, animalName, startIndex = 0) {
+  const photos = candidates.filter((url) => url && !url.startsWith("assets/"));
+  let attempt = 0;
+
+  const tryNext = () => {
+    if (attempt >= photos.length) {
+      image.onerror = null;
+      image.src = fallbackSvg(animalName);
+      return;
+    }
+
+    const index = (startIndex + attempt) % photos.length;
+    attempt += 1;
+    image.src = photos[index];
+  };
+
+  image.onerror = tryNext;
+  tryNext();
 }
 
 async function loadAnimalImages(animal) {
@@ -1519,52 +1536,32 @@ async function loadAnimalImages(animal) {
       const response = await fetch(url);
       const data = await response.json();
       const pages = Object.values(data.query?.pages || {});
-      pages
+      const matchingPhotos = pages
         .filter((page) => isAnimalPhotoPage(page, animal))
         .map((page) => page.imageinfo?.[0]?.thumburl || page.imageinfo?.[0]?.url)
-        .filter(Boolean)
-        .forEach((imageUrl) => {
+        .filter(Boolean);
+      const searchPhotos = pages
+        .filter((page) => (page.imageinfo?.[0]?.mime || "").startsWith("image/"))
+        .map((page) => page.imageinfo?.[0]?.thumburl || page.imageinfo?.[0]?.url)
+        .filter((imageUrl) => imageUrl && isAnimalPhotoUrl(imageUrl));
+
+      (matchingPhotos.length ? matchingPhotos : searchPhotos).forEach((imageUrl) => {
           if (images.length < 5 && !images.includes(imageUrl) && isAnimalPhotoUrl(imageUrl)) {
             images.push(imageUrl);
           }
         });
     } catch {
-      break;
+      continue;
     }
   }
 
   const foundPhotos = [...images];
-  const fallbacks = localHabitatImages(animal);
   while (images.length < 5) {
-    images.push(foundPhotos.length ? foundPhotos[images.length % foundPhotos.length] : fallbacks[images.length % fallbacks.length] || fallbackSvg(animal.name));
+    images.push(foundPhotos.length ? foundPhotos[images.length % foundPhotos.length] : fallbackSvg(animal.name));
   }
 
   state.imageCache.set(animal.id, images);
   return images;
-}
-
-function localHabitatImages(animal) {
-  const primary = habitatAssets[habitatAssetKey(animal)] || habitatAssets.forest;
-  const gallery = [primary, habitatAssets.forest, habitatAssets.grass, habitatAssets.water, habitatAssets.cloud].filter(Boolean);
-  return gallery.slice(0, 5);
-}
-
-function habitatAssetKey(animal) {
-  const text = [animal.type, animal.habitat, animal.range, animal.threat, animal.name].join(" ").toLowerCase();
-
-  if (/(ocean|sea|marine|reef|river|wetland|coast|water|whale|seal|turtle|fish|vaquita|penguin)/.test(text)) {
-    return "water";
-  }
-
-  if (/(bird|albatross|vulture|eagle|falcon|crane|parrot|macaw|petrel|condor)/.test(text)) {
-    return "cloud";
-  }
-
-  if (/(grass|savanna|steppe|prairie|shrubland|desert|karoo|sahel)/.test(text)) {
-    return "grass";
-  }
-
-  return "forest";
 }
 
 function isAnimalPhotoPage(page, animal) {
@@ -1860,6 +1857,13 @@ function setupLogoFallback() {
   });
 }
 
+function setupRefreshButton() {
+  document.querySelector("#refreshApp")?.addEventListener("click", () => {
+    state.imageCache.clear();
+    window.location.reload();
+  });
+}
+
 renderRegionGrid();
 setActiveRegion(state.activeRegionId);
 setupSearch();
@@ -1869,4 +1873,5 @@ setupRegionDropdown();
 setupThemePreference();
 renderAnimalSuggestions();
 setupLogoFallback();
+setupRefreshButton();
 initGlobe();
