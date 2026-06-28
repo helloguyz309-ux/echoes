@@ -1,6 +1,6 @@
 {
   "name": "echoes-desktop",
-  "version": "4.0.0",
+  "version": "5.0.0",
   "description": "Interactive endangered species globe",
   "main": "electron-main.js",
   "author": "helloguyz309-ux",
